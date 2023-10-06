@@ -49,9 +49,9 @@
     </div>
     <div class="sidebar_items">
         <ul>
-            <li><i class="fa-solid fa-flag" style="color: #ffffff;"></i>&nbsp;<a href="#" class="ul-el" aria-expanded="false">Reports</a></li>
+            <li><i class="fa-solid fa-flag" style="color: #ffffff;"></i>&nbsp;&nbsp;<a href="#" class="ul-el" aria-expanded="false">Reports</a></li>
             <li><i class="fa-solid fa-users" style="color: #ffffff;"></i>&nbsp;<a href="./addstudent.php" class="ul-el" aria-expanded="false"> Manage Student</a></li>
-            <li><i class="fa-solid fa-building-columns" style="color: #ffffff;"></i>&nbsp;<a href="./adddepartment.php" class="ul-el" aria-expanded="false">Manage Departments</a></li>
+            <li><i class="fa-solid fa-building-columns" style="color: #ffffff;"></i>&nbsp;&nbsp;<a href="./adddepartment.php" class="ul-el" aria-expanded="false">Manage Departments</a></li>
         </ul>
     </div>
     <script>

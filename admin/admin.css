@@ -223,6 +223,10 @@ body{
     display: block;
 }
 
+.sidebar_items{
+    display: none;
+}
+
 
 @media screen and (width <= 500px){
     .main-container{
