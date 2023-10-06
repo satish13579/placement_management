@@ -8,77 +8,164 @@
       src="https://kit.fontawesome.com/a4e89c7158.js"
       crossorigin="anonymous"
     ></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" href="login.css" />
   </head>
   <body>
     <div class="login_container">
-        <div class="login_details">
-            <div class="login_heading">
-                <h1>Login</h1>
-            </div>
-            <form action="">
-                <div class="usernameinput_fields">
-                    <label for="username"><i class="fa fa-solid fa-user" style="color: rgb(20, 20, 39);"></i></label>
-                    <input type="text" name="" id="username" placeholder="Username" required>
-                </div>
-                <div class="passwordinput_fields">
-                    <label for="password"><i class="fa fa-solid fa-lock" style="color: rgb(20, 20, 39);"></i></label>
-                    <input type="password" name="" id="password" placeholder="Password" required>
-                </div>
-                <div class="login_button">
-                    <button class="login-btn" id>LOGIN</button>
-                </div>
-            </form>
-            <div class="forgot_signup">
-                <a href="#" class="frgt_pswrd">forgot password?</a>
-                <a href="#">Sign Up</a>
-                <div class="modal_popup">
-                    <div class="modal_body">
-                        <form action="" id="frgt_form">
-                            <select name="" id="selecter" required>
-                                <option value="">Select User</option>
-                                <option value="Admin">Admin</option>
-                                <option value="Department Co-ordinator">Department Co-ordinator</option>
-                                <option value="Student">Student</option>
-                            </select>
-                            <div class="inpt_mail">
-                                <label for="mail"><i class="fa fa-solid fa-envelope" style="color: rgb(20, 20, 39);"></i></label>
-                                <input type="email" name="" id="mail" required>
-                            </div>
-                            <div class="btns">
-                                <button class="submit_btn" type="submit">SUBMIT</button>
-                            </div>
-                        </form>
-                        <button class="close_btn">close</button>
-                        <p style="display: none; color: #fff;" class="emailsent"><i class="fa-regular fa-circle-check fa-beat-fade" style="color: #ffffff;"></i> Check Your Mail</p>
-                    </div>
-                </div>
-            </div>
+      <div class="login_details">
+        <div class="login_heading">
+          <h1>Login</h1>
         </div>
+        <form id="login-form">
+          <div class="usernameinput_fields">
+            <label for="username"
+              ><i class="fa fa-solid fa-user" style="color: rgb(20, 20, 39)"></i
+            ></label>
+            <input
+              type="text"
+              name=""
+              id="username"
+              placeholder="Username"
+              required
+            />
+          </div>
+          <div class="passwordinput_fields">
+            <label for="password"
+              ><i class="fa fa-solid fa-lock" style="color: rgb(20, 20, 39)"></i
+            ></label>
+            <input
+              type="password"
+              name=""
+              id="password"
+              placeholder="Password"
+              required
+            />
+          </div>
+          <div class="login_button">
+            <input type="submit" id="login-org" style="display: none;">
+        </div>
+
+        </form>
+            <button class="login-btn" id="login-btn">LOGIN</button>
+        <div class="forgot_signup">
+          <a href="#" class="frgt_pswrd">forgot password?</a>
+          <a href="#">Sign Up</a>
+          <div class="modal_popup">
+            <div class="modal_body">
+              <form id="frgt_form">
+                <select name="" id="selecter" required>
+                  <option value="">Select User</option>
+                  <option value="college">Admin</option>
+                  <option value="dept">
+                    Department Co-ordinator
+                  </option>
+                  <option value="student">Student</option>
+                </select>
+                <div class="inpt_mail">
+                  <label for="mail"
+                    ><i
+                      class="fa fa-solid fa-envelope"
+                      style="color: rgb(20, 20, 39)"
+                    ></i
+                  ></label>
+                  <input type="email" name="" id="mail" required />
+                </div>
+                <input type="submit" id="frgt-org" style="display:none;">
+                </form>
+                <div class="btns">
+                  <button class="submit_btn" id="submit-btn">SUBMIT</button>
+                </div>
+              <button class="close_btn">close</button>
+              <p style="display: none; color: #fff" class="emailsent">
+                <i
+                  class="fa-regular fa-circle-check fa-beat-fade"
+                  style="color: #ffffff"
+                ></i>
+                Check Your Mail
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <script>
-        let PopOpen = document.querySelector('.modal_popup');
-        let Selecter = document.getElementById('selecter').value;
+      let PopOpen = document.querySelector(".modal_popup");
+      let Selecter = document.getElementById("selecter").value;
 
-
-        document.querySelector('.frgt_pswrd').addEventListener('click', function(){
-            PopOpen.classList.add('popup_open');
-            PopOpen.classList.remove('modal_popup');
+      document
+        .querySelector(".frgt_pswrd")
+        .addEventListener("click", function () {
+          PopOpen.classList.add("popup_open");
+          PopOpen.classList.remove("modal_popup");
         });
 
-        document.querySelector('.close_btn').addEventListener('click', function(){
-            PopOpen.classList.remove('popup_open');
-            PopOpen.classList.add('modal_popup');
+      document
+        .querySelector(".close_btn")
+        .addEventListener("click", function () {
+          PopOpen.classList.remove("popup_open");
+          PopOpen.classList.add("modal_popup");
         });
 
-        /*document.addEventListener("click", function (e) {
-            console.log(e.target.id);
-            if (e.target.class === "modal_popup") {
-                PopOpen.classList.add('modal_popup');
-            }
-        });*/
+      $("#login-btn").on("click", function (e) {
+        var form = document.querySelector("#login-form");
+        if (!form.checkValidity()) {
+          var sbtn = document.querySelector("#login-org");
+          sbtn.click();
+        } else {
+                $.ajax({
+                    url:"login.php",
+                    type:"post",
+                    data:{"type":"login","username":$('#username').val(),"password":$("#password").val()},
+                    success:function(dataResult){
+                        var dataResult=JSON.parse(dataResult);
+                        if(dataResult.statusCode==200){
+                            if(dataResult.role=='college'){
+                                window.location.href="./admin/addstudent.php";
+                            }else if(dataResult.role=='dept'){
+                                window.location.href="./dept/index.php";
+                            }else if(dataResult.role=='student'){
+                                window.location.href="./student/index.php";
+                            }
+                        }
+                        else if(dataResult.statusCode==400){
+                            alert(dataResult.err);
+                        }
+                    }
+                });
+        }
+      });
 
+      $("#submit-btn").on("click",function(e){
+        var form = document.querySelector("#frgt_form");
+        if (!form.checkValidity()) {
+          var sbtn = document.querySelector("#frgt-org");
+          sbtn.click();
+        } else {
+            $.ajax({
+                url:"login.php",
+                type:"post",
+                data:{"type":"reset","role":$('#selecter').val(),"email":$("#mail").val()},
+                success:function(dataResult){
+                    var dataResult=JSON.parse(dataResult);
+                    if(dataResult.statusCode==200){
+                        alert("Reset Password Link Sent Successfully to "+dataResult.email+".!!")
+                    }
+                    else if(dataResult.statusCode==400){
+                        alert(dataResult.msg);
+                    }
+                }
+            });
+        }
+      });
+
+      /*document.addEventListener("click", function (e) {
+              console.log(e.target.id);
+              if (e.target.class === "modal_popup") {
+                  PopOpen.classList.add('modal_popup');
+              }
+          });*/
     </script>
   </body>
 </html>
