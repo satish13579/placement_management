@@ -21,8 +21,14 @@
             <h2 class="admin-heading">Admin</h2>
             <div class="hr"></div>
             <ul>
-                <li><a href="#" class="ul-el" aria-expanded="false">Dashboard</a></li>
-                <li><a href="#" class="ul-el" aria-expanded="false">Add Student</a></li>
+                <li>
+                    <i class="fa-solid fa-table-columns" style="color: #ffffff;"></i>
+                    <a href="#" class="ul-el" aria-expanded="false">Dashboard</a>
+                </li>
+                <li>
+                    <i class="fa-solid fa-users" style="color: #ffffff;"></i>
+                    <a href="#" class="ul-el" aria-expanded="false">Add Student</a>
+                </li>
             </ul>
         </div>
     </div>

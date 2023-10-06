@@ -1,34 +1,84 @@
-<!DOCTYPE html> 
- <html lang="en"> 
- <head> 
-     <meta charset="UTF-8"> 
-     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-     <title>Login</title>
-     <script src="https://kit.fontawesome.com/a4e89c7158.js" crossorigin="anonymous"></script>
-     <link rel="stylesheet" href="login.css">
- </head> 
- <body> 
-     <div class="container front"> 
-         <div class="top"> 
-             <span>Login</span> 
-         </div> 
-         <div class="form"> 
-             <form> 
-                 <div class="inputBox inputBoxFront"> 
-                     <label><i class="fa-solid fa-user"></i></label> 
-                     <input type="text" placeholder="Username" class="input" required> 
-                 </div> 
-                 <div class="inputBox inputBoxFront"> 
-                     <label><i class="fa-solid fa-lock"></i></label> 
-                     <input type="password" placeholder="Password" class="input" required>
-                     <i class="fa-solid fa-eye" style="color: #000000; display: none;"></i>
-                     <i class="fa-solid fa-eye-slash" style="color: #000000;"></i> 
-                 </div> 
-                 <button type="submit" class="login-btn">Login</button> 
-                 <div class="user">forgot password?</div> 
-             </form> 
-         </div> 
-     </div> 
-  
- </body> 
- </html>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <script
+      src="https://kit.fontawesome.com/a4e89c7158.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="login.css" />
+  </head>
+  <body>
+    <div class="login_container">
+        <div class="login_details">
+            <div class="login_heading">
+                <h1>Login</h1>
+            </div>
+            <form action="">
+                <div class="usernameinput_fields">
+                    <label for="username"><i class="fa fa-solid fa-user" style="color: rgb(20, 20, 39);"></i></label>
+                    <input type="text" name="" id="username" placeholder="Username" required>
+                </div>
+                <div class="passwordinput_fields">
+                    <label for="password"><i class="fa fa-solid fa-lock" style="color: rgb(20, 20, 39);"></i></label>
+                    <input type="password" name="" id="password" placeholder="Password" required>
+                </div>
+                <div class="login_button">
+                    <button class="login-btn" id>LOGIN</button>
+                </div>
+            </form>
+            <div class="forgot_signup">
+                <a href="#" class="frgt_pswrd">forgot password?</a>
+                <a href="#">Sign Up</a>
+                <div class="modal_popup">
+                    <div class="modal_body">
+                        <form action="" id="frgt_form">
+                            <select name="" id="selecter" required>
+                                <option value="">Select User</option>
+                                <option value="Admin">Admin</option>
+                                <option value="Department Co-ordinator">Department Co-ordinator</option>
+                                <option value="Student">Student</option>
+                            </select>
+                            <div class="inpt_mail">
+                                <label for="mail"><i class="fa fa-solid fa-envelope" style="color: rgb(20, 20, 39);"></i></label>
+                                <input type="email" name="" id="mail" required>
+                            </div>
+                            <div class="btns">
+                                <button class="submit_btn" type="submit">SUBMIT</button>
+                            </div>
+                        </form>
+                        <button class="close_btn">close</button>
+                        <p style="display: none; color: #fff;" class="emailsent"><i class="fa-regular fa-circle-check fa-beat-fade" style="color: #ffffff;"></i> Check Your Mail</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let PopOpen = document.querySelector('.modal_popup');
+        let Selecter = document.getElementById('selecter').value;
+
+
+        document.querySelector('.frgt_pswrd').addEventListener('click', function(){
+            PopOpen.classList.add('popup_open');
+            PopOpen.classList.remove('modal_popup');
+        });
+
+        document.querySelector('.close_btn').addEventListener('click', function(){
+            PopOpen.classList.remove('popup_open');
+            PopOpen.classList.add('modal_popup');
+        });
+
+        /*document.addEventListener("click", function (e) {
+            console.log(e.target.id);
+            if (e.target.class === "modal_popup") {
+                PopOpen.classList.add('modal_popup');
+            }
+        });*/
+
+    </script>
+  </body>
+</html>
