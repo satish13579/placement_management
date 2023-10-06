@@ -1,3 +1,12 @@
+<?php 
+    include 'auth.php'; 
+
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\SMTP;
+    use PHPMailer\PHPMailer\Exception;
+    
+    require 'vendor/autoload.php';
+    ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,13 +20,10 @@
 
 <body>
 
-    <?php include 'admin.php';
-    include 'auth.php';
-    use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
-use PHPMailer\PHPMailer\Exception;
-
-require 'vendor/autoload.php';
+    
+   
+<?php
+include 'admin.php';
 
     function randomSalt($len = 8)
 {

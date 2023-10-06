@@ -1,3 +1,5 @@
+<?php     include 'auth.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,7 +14,6 @@
 <body>
 
     <?php include 'admin.php';
-    include 'auth.php';
     use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
