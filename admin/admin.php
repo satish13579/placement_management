@@ -25,9 +25,20 @@
             <h2 class="admin-heading">Admin</h2>
             <div class="hr"></div>
             <ul>
+<<<<<<< HEAD
+                <li>
+                    <i class="fa-solid fa-table-columns" style="color: #ffffff;"></i>
+                    <a href="#" class="ul-el" aria-expanded="false">Dashboard</a>
+                </li>
+                <li>
+                    <i class="fa-solid fa-users" style="color: #ffffff;"></i>
+                    <a href="#" class="ul-el" aria-expanded="false">Add Student</a>
+                </li>
+=======
                 <li><a href="#" class="ul-el" aria-expanded="false">Dashboard</a></li>
                 <li><a href="./addstudent.php" class="ul-el" aria-expanded="false">Manage Student</a></li>
                 <li><a href="./adddepartment.php" class="ul-el" aria-expanded="false">Manage Departments</a></li>
+>>>>>>> 409f1877cbb7889ad5fb0de7f4f63a408cc0699a
             </ul>
         </div>
     </div>
