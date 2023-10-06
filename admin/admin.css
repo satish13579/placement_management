@@ -9,8 +9,8 @@
 }
 
 ::selection{
-    background-color: ;
-    color: ;
+    background-color: var(--textcolor, #fff);
+    color: var(--bgcolor);
 }
 
 :root{
@@ -130,6 +130,7 @@
 }
 
 #submit_btn:hover{
-
+    cursor: pointer;
+    
 }
 
