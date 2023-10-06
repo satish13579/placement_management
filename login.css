@@ -152,27 +152,24 @@ input{
 
 .modal_popup{
     position: absolute;
-    transform: translateY(50%) scale(.1);
+    transform: translateY(-50%) scale(.1);
     visibility: hidden;
     transition: all .3s;
 }
 
 .popup_open{
     position: absolute;
-    transform: translateY(0%) scale(1);
+    transform: translateY(-50%) scale(1);
     visibility: visible;
-    top: 20%;
-    left: 10%;
     transition: all .3s;
-    box-shadow: 2px 2px 2px 1000px rgba(255, 255, 255, .8);
+    box-shadow: 2px 2px 2px 1000px rgb(26 22 22 / 80%);
 }
 
 .modal_body select{
     border: 1px solid #fff;
-    background-color: transparent;
-    color: var(--textcolor, #fff);
+    color: #141427;
     padding: 5px 10px;
-    border-radius: 4px;
+    border-radius: 4px
 }
 
 .close_btn{
@@ -182,6 +179,8 @@ input{
     padding: 5px 10px;
     border-radius: 4px;
     transition: all .1s;
+    width: 100px;
+    margin: auto;
 }
 
 .submit_btn{

@@ -86,7 +86,7 @@ function sendSalt($email, $salt, $roll_no)
                     </select>
                 </div>
                 <div class="submit_button">
-                    <input type="submit" name="submit" value="submit" id="submit_btn">SUBMIT</input>
+                    <input type="submit" name="submit" value="submit" id="submit_btn"></input>
                 </div>
                 </form>
             </div>
