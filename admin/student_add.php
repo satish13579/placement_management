@@ -1,5 +1,5 @@
 <?php
-include '../conn.php';
+include 'auth.php';
 
 
 

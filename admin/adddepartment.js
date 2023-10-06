@@ -1,5 +1,4 @@
 
-
 $(document).on('click','#btn-add',function(e) { 
     var form = document.querySelector("#user_form");
     if(!form.checkValidity()){

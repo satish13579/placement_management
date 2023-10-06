@@ -12,7 +12,7 @@
 <body>
 
     <?php include 'admin.php';
-    include '../conn.php';
+    include 'auth.php';
     use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
