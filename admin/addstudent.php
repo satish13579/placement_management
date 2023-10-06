@@ -19,7 +19,7 @@
             </div>
             <div class="second">
                 <div class="choose_file">
-                    <input type="file" name="" id="choose">
+                    <input type="file" name="choose File" id="choose">
                 </div>
                 <div class="drop_down">
                     <select name="" id="">
