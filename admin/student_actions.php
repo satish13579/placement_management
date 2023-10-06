@@ -61,10 +61,17 @@ if (count($_POST) > 0) {
                 $insert = $conn->prepare("INSERT INTO `students` (`roll_no`,`first_name`,`last_name`,`dob`,`email`,`passout_year`,`dept_id`) 
             VALUES (?,?,?,?,?,?,?)");
                 $res = $insert->execute(array($roll_no, $first_name, $last_name, $dob, $email, $passout_year, $dept_id));
+                $salt = randomSalt(32);
+                date_default_timezone_set('Asia/Kolkata');
+                $cur = date('Y-m-d H:i:s');
+                sendSalt($email, $salt, $roll_no);
+                $insq = $conn->prepare("INSERT INTO `reset_password`(`role`, `user_id`, `salt`, `flag`, `date`)
+        VALUES (?,?,?,?,?)");
+                $insq->execute(array('students', $roll_no, $salt, 0, $cur));
                 echo json_encode(array("statusCode" => 200));
             } catch (Exception $e) {
                 $msg = "Error code: " . $e->getCode() . "\nError Message: " . $e->getMessage();
-                echo json_encode(array("statusCode" => 400, "msg" => $msg));
+                echo json_encode(array("statusCode" => 400, "err" => $msg));
             }
         }
     } else if ($_POST['type'] == 'student_reset_generate') {
@@ -125,7 +132,7 @@ if (count($_POST) > 0) {
                 echo json_encode(array("statusCode" => 200));
             } catch (Exception $e) {
                 $msg = "Error code: " . $e->getCode() . "\nError Message: " . $e->getMessage();
-                echo json_encode(array("statusCode" => 400, "msg" => $msg));
+                echo json_encode(array("statusCode" => 400, "err" => $msg));
             }
         } else {
             echo json_encode(array("statusCode" => 400, "err" => "Student Doesn't Exists.!!"));
@@ -141,26 +148,26 @@ if (count($_POST) > 0) {
                 echo json_encode(array("statusCode" => 200));
             } catch (Exception $e) {
                 $msg = "Error code: " . $e->getCode() . "\nError Message: " . $e->getMessage();
-                echo json_encode(array("statusCode" => 400, "msg" => $msg));
+                echo json_encode(array("statusCode" => 400, "err" => $msg));
             }
         } else {
             echo json_encode(array("statusCode" => 400, "err" => "Student Doesn't Exists.!!"));
         }
     } else if ($_POST['type'] == 'student_multiple_delete') {
         $roll_nos = $_POST['roll_nos'];
-        $err='';
-        for ($i = 0; $i < count($rollnos); $i++) {
-            $id = $rollnos[$i];
+        $err = '';
+        for ($i = 0; $i < count($roll_nos); $i++) {
+            $id = $roll_nos[$i];
             try {
                 $sql = $conn->prepare("DELETE FROM `students` WHERE roll_no=?");
-                $res = $sql->execute(array($roll_no));
+                $res = $sql->execute(array($id));
             } catch (Exception $e) {
                 $err .= "Error For $id\nError code: " . $e->getCode() . "\nError Message: " . $e->getMessage();
             }
         }
-        if($err==''){
-            echo json_encode(array("statusCode"=>200));
-        }else{
+        if ($err == '') {
+            echo json_encode(array("statusCode" => 200));
+        } else {
             echo json_encode(array("statusCode" => 400, "err" => $err));
         }
     }
