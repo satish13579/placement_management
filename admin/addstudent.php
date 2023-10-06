@@ -234,7 +234,7 @@ function sendSalt($email, $salt, $roll_no)
 
 <!--upload single student data-->
 </div>
-<div style="margin-left: 180px;
+<div style="margin-left: 240px;
     padding: 20px;" class="table-wrapper">
 		<div class="table-title">
 			<div class="row">
@@ -289,7 +289,7 @@ function sendSalt($email, $salt, $roll_no)
 				<td class='align-middle text-center'><?php echo $row["roll_no"]; ?></td>
 				<td class='align-middle text-center'><?php echo $row["first_name"]; ?></td>
 				<td class='align-middle text-center'><?php echo $row["last_name"]; ?></td>
-				<td class='align-middle text-center'><?php echo $row["dob"]; ?></td>
+				<td class='align-middle text-center' style="white-space:pre;"><?php echo $row["dob"]; ?></td>
 				<td class='align-middle text-center'><?php echo $row["email"]; ?></td>
 				<td class='align-middle text-center'><?php echo $departments[$row['dept_id']]; ?></td>
                 <td class='align-middle text-center'><?php echo $row["passout_year"]; ?></td>
@@ -606,7 +606,7 @@ function reset_template($link, $roll_no)
 					<table border='0' cellpadding='0' cellspacing='0' width='100%' style='max-width: 600px;'>
 						<tr>
 							<td bgcolor='#ffffff' align='left' style='padding: 20px 30px 40px 30px; color: #666666; font-family: Lato, Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;'>
-								<p style='margin: 0;'>As We You Account Has Been Created By The Rollno <span style='background-color:#808080;color:#ffffff;padding:4px 6px 4px 6px;border-radius:4px;'>$roll_no</span> , We've Sent The Password Creation Link. Just Click The Below Button To Create Your Password.</p>
+								<p style='margin: 0;'>As Your Account Has Been Created By The Rollno <span style='background-color:#808080;color:#ffffff;padding:4px 6px 4px 6px;border-radius:4px;'>$roll_no</span> , We've Sent The Password Creation Link. Just Click The Below Button To Create Your Password.</p>
 							</td>
 						</tr>
 						<tr>

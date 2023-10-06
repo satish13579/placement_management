@@ -17,7 +17,7 @@ function randomSalt($len = 8)
     return $str;
 }
 
-function sendSalt($email, $salt, $roll_no)
+function sendSalt($email, $salt, $dept_name,$type)
 {
     global $BASE_URL;
     $mail = new PHPMailer(true);
@@ -36,53 +36,55 @@ function sendSalt($email, $salt, $roll_no)
 
     $mail->isHTML(true);
 
-    $mail->Subject = "Account Password Reset Link";
+    if($type=="create"){
+        $mail->Subject = "Account Password Generation Link";
+    }
+    else{
+        $mail->Subject = "Account Password Reset Link";
+    }
+
+    
     $link = $BASE_URL . 'reset_password.php?salt=' . $salt;
-    $mail->Body = reset_template($link, $roll_no);
+    $mail->Body = reset_template($link, $dept_name,$type);
 
     $mail->send();
 }
 
 if (count($_POST) > 0) {
-    if ($_POST['type'] == 'student_single_add') {
-        $roll_no = $_POST['roll_no'];
-        $first_name = $_POST['first_name'];
-        $last_name = $_POST['last_name'];
-        $dob = $_POST['dob'];
-        $email = $_POST['email'];
-        $dept_id = $_POST['dept_id'];
-        $passout_year = $_POST['passout_year'];
-        $sql = $conn->prepare("SELECT * FROM students WHERE roll_no=?");
-        $res = $sql->execute(array($roll_no));
+    if ($_POST['type'] == 'department_single_add') {
+        $dept_name = $_POST['dept_name'];
+        $email  = $_POST['email'];
+        $sql = $conn->prepare("SELECT * FROM `dept` WHERE email=?");
+        $res = $sql->execute(array($email));
         if ($sql->rowCount() > 0) {
-            echo json_encode(array("statusCode" => 400, "err" => "Student already Exists.!!"));
+            echo json_encode(array("statusCode" => 400, "err" => "Email Already Registered, Try again with another.!!"));
         } else {
             try {
-                $insert = $conn->prepare("INSERT INTO `students` (`roll_no`,`first_name`,`last_name`,`dob`,`email`,`passout_year`,`dept_id`) 
-            VALUES (?,?,?,?,?,?,?)");
-                $res = $insert->execute(array($roll_no, $first_name, $last_name, $dob, $email, $passout_year, $dept_id));
+                $insert = $conn->prepare("INSERT INTO `dept` (`dept_name`,`college_id`,`email`) 
+            VALUES (?,?,?)");
+                $res = $insert->execute(array($dept_name, 1, $email));
                 $salt = randomSalt(32);
                 date_default_timezone_set('Asia/Kolkata');
                 $cur = date('Y-m-d H:i:s');
-                sendSalt($email, $salt, $roll_no);
+                sendSalt($email, $salt, $dept_name,"create");
                 $insq = $conn->prepare("INSERT INTO `reset_password`(`role`, `user_id`, `salt`, `flag`, `date`)
         VALUES (?,?,?,?,?)");
-                $insq->execute(array('students', $roll_no, $salt, 0, $cur));
+                $insq->execute(array('departments', $conn->lastInsertId(), $salt, 0, $cur));
                 echo json_encode(array("statusCode" => 200));
             } catch (Exception $e) {
                 $msg = "Error code: " . $e->getCode() . "\nError Message: " . $e->getMessage();
                 echo json_encode(array("statusCode" => 400, "err" => $msg));
             }
         }
-    } else if ($_POST['type'] == 'student_reset_generate') {
-        $roll_no = $_POST['roll_no'];
-        $emailr = $conn->prepare("SELECT * FROM `students` WHERE `roll_no`=?");
-        $emailr->execute(array($roll_no));
+    } else if ($_POST['type'] == 'department_reset_generate') {
+        $dept_id = $_POST['dept_id'];
+        $emailr = $conn->prepare("SELECT * FROM `dept` WHERE `dept_id`=?");
+        $emailr->execute(array($dept_id));
         if ($emailr->rowCount() == 1) {
-            $student = $emailr->fetch();
-            $email = $student['email'];
+            $dept = $emailr->fetch();
+            $email = $dept['email'];
             if ($email == '' || $email == null) {
-                $msg = "No email available to send reset password link, please update email for " . $roll_no . " Roll before requesting reset password.";
+                $msg = "No email available to send reset password link, please update email for " . $dept['dept_name'] . " department before requesting reset password.";
                 echo json_encode(array("statusCode" => 400, "msg" => $msg));
             } else {
                 $errmsg = '';
@@ -90,7 +92,7 @@ if (count($_POST) > 0) {
                 date_default_timezone_set('Asia/Kolkata');
                 $cur = date('Y-m-d H:i:s');
                 try {
-                    sendSalt($email, $salt, $roll_no);
+                    sendSalt($email, $salt, $dept['dept_name'],"reset");
                 } catch (Exception $e) {
                     $errmsg = "The Following Error Occured While Sending Mail To " . $email . " :\nError Code : " . $e->getCode() . "\nError Message : " . $e->getMessage();
                 }
@@ -99,7 +101,7 @@ if (count($_POST) > 0) {
                     try {
                         $insq = $conn->prepare("INSERT INTO `reset_password`(`role`, `user_id`, `salt`, `flag`, `date`)
                          VALUES (?,?,?,?,?)");
-                        $insq->execute(array('students', $roll_no, $salt, 0, $cur));
+                        $insq->execute(array('departments', $dept_id, $salt, 0, $cur));
                     } catch (Exception $e) {
                         $errmsg = "Error code: " . $e->getCode() . "\nError Message: " . $e->getMessage();
                     }
@@ -113,60 +115,68 @@ if (count($_POST) > 0) {
                 }
             }
         } else {
-            echo json_encode(array("statusCode" => 400, "msg" => "No student available with " . $roll_no . " roll no."));
+            echo json_encode(array("statusCode" => 400, "msg" => "No Departments available with " . $dept_id . " ID."));
         }
-    } else if ($_POST['type'] == 'student_single_edit') {
-        $roll_no = $_POST['roll_no'];
-        $first_name = $_POST['first_name'];
-        $last_name = $_POST['last_name'];
-        $dob = $_POST['dob'];
-        $email = $_POST['email'];
+    } else if ($_POST['type'] == 'departmemt_single_edit') {
         $dept_id = $_POST['dept_id'];
-        $passout_year = $_POST['passout_year'];
-        $sql = $conn->prepare("SELECT * FROM students WHERE roll_no=?");
-        $res = $sql->execute(array($roll_no));
+        $dept_name = $_POST['dept_name'];
+        $email = $_POST['email'];
+        $sql = $conn->prepare("SELECT * FROM `dept` WHERE `dept_id`=?");
+        $res = $sql->execute(array($dept_id));
         if ($sql->rowCount() > 0) {
             try {
-                $insert = $conn->prepare("UPDATE `students` SET `first_name`=?,`last_name`=?,`dob`=?,`email`=?,`dept_id`=?,`passout_year`=? WHERE roll_no=?");
-                $res = $insert->execute(array($first_name, $last_name, $dob, $email, $dept_id, $passout_year, $roll_no));
+                $insert = $conn->prepare("UPDATE `dept` SET `dept_name`=?,`email`=? WHERE dept_id=?");
+                $res = $insert->execute(array($dept_name, $email,$dept_id));
                 echo json_encode(array("statusCode" => 200));
             } catch (Exception $e) {
                 $msg = "Error code: " . $e->getCode() . "\nError Message: " . $e->getMessage();
                 echo json_encode(array("statusCode" => 400, "err" => $msg));
             }
         } else {
-            echo json_encode(array("statusCode" => 400, "err" => "Student Doesn't Exists.!!"));
+            echo json_encode(array("statusCode" => 400, "err" => "Department Doesn't Exists.!!"));
         }
-    } else if ($_POST['type'] == 'student_single_delete') {
-        $roll_no = $_POST['roll_no'];
-        $sql = $conn->prepare("SELECT * FROM students WHERE roll_no=?");
-        $res = $sql->execute(array($roll_no));
+    } else if ($_POST['type'] == 'department_single_delete') {
+        $dept_id = $_POST['dept_id'];
+        $sql = $conn->prepare("SELECT * FROM `dept` WHERE `dept_id`=?");
+        $res = $sql->execute(array($dept_id));
         if ($sql->rowCount() > 0) {
             try {
-                $insert = $conn->prepare("DELETE FROM `students` WHERE roll_no=?");
-                $res = $insert->execute(array($roll_no));
+                $insert = $conn->prepare("DELETE FROM `dept` WHERE dept_id=?");
+                $res = $insert->execute(array($dept_id));
                 echo json_encode(array("statusCode" => 200));
             } catch (Exception $e) {
                 $msg = "Error code: " . $e->getCode() . "\nError Message: " . $e->getMessage();
                 echo json_encode(array("statusCode" => 400, "err" => $msg));
             }
+            catch (PDOException $e){
+                if($e->getCode()==23000){
+                    $msg="Delete Failed Due to There Students Records based on this department ID $dept_id";
+                }
+                echo json_encode(array("statusCode"=>400,"err"=>$msg));
+            }
         } else {
-            echo json_encode(array("statusCode" => 400, "err" => "Student Doesn't Exists.!!"));
+            echo json_encode(array("statusCode" => 400, "err" => "Department Doesn't Exists.!!"));
         }
-    } else if ($_POST['type'] == 'student_multiple_delete') {
-        $roll_nos = $_POST['roll_nos'];
-        $err = '';
-        for ($i = 0; $i < count($roll_nos); $i++) {
-            $id = $roll_nos[$i];
+    } else if ($_POST['type'] == 'department_multiple_delete') {
+        $dept_ids = $_POST['dept_ids'];
+        $err = '';$msg='';
+        for ($i = 0; $i < count($dept_ids); $i++) {
+            $id = $dept_ids[$i];
             try {
-                $sql = $conn->prepare("DELETE FROM `students` WHERE roll_no=?");
+                $sql = $conn->prepare("DELETE FROM `dept` WHERE dept_id=?");
                 $res = $sql->execute(array($id));
             } catch (Exception $e) {
-                $err .= "Error For $id\nError code: " . $e->getCode() . "\nError Message: " . $e->getMessage();
+                $err .= "Error For $id Department ID\nError code: " . $e->getCode() . "\nError Message: " . $e->getMessage();
+            } catch (PDOException $e){
+                if($e->getCode()==23000){
+                    $msg.="Skipped deleting Department ID $id, Due to There Students Records based on this department";
+                    continue;
+                }
+                $err .= "Error For $id Department ID\nError code: " . $e->getCode() . "\nError Message: " . $e->getMessage();
             }
         }
         if ($err == '') {
-            echo json_encode(array("statusCode" => 200));
+            echo json_encode(array("statusCode" => 200,"msg"=>$msg));
         } else {
             echo json_encode(array("statusCode" => 400, "err" => $err));
         }
@@ -174,8 +184,14 @@ if (count($_POST) > 0) {
 }
 
 
-function reset_template($link, $roll_no)
+function reset_template($link, $dept_name,$type)
 {
+    if($type=="create"){
+        $desc = "As Your Account Has Been Created By The Department name <span style='background-color:#808080;color:#ffffff;padding:4px 6px 4px 6px;border-radius:4px;'>$dept_name</span> , We've Sent The Password Creation Link. Just Click The Below Button To Create Your Password.";
+    }
+    else{
+        $desc = "As We Recieved Reset Password Request For The Department name <span style='background-color:#808080;color:#ffffff;padding:4px 6px 4px 6px;border-radius:4px;'>$dept_name</span> , We've Sent The Reset Password Link. Just Click The Below Button To Reset Your Password";
+    }
     return "<!DOCTYPE html>
 	<html>
 	
@@ -282,7 +298,7 @@ function reset_template($link, $roll_no)
 	
 	<body style='background-color: #f4f4f4; margin: 0 !important; padding: 0 !important;'>
 		<!-- HIDDEN PREHEADER TEXT -->
-		<div style='display: none; font-size: 1px; color: #fefefe; line-height: 1px; font-family: Lato, Helvetica, Arial, sans-serif; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden;'>Click The Given Link to Reset Your Password For $roll_no username.!
+		<div style='display: none; font-size: 1px; color: #fefefe; line-height: 1px; font-family: Lato, Helvetica, Arial, sans-serif; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden;'>Click The Given Link to Reset Your Password For $dept_name name.!
 		</div>
 		<table border='0' cellpadding='0' cellspacing='0' width='100%'>
 			<!-- LOGO -->
@@ -311,7 +327,7 @@ function reset_template($link, $roll_no)
 					<table border='0' cellpadding='0' cellspacing='0' width='100%' style='max-width: 600px;'>
 						<tr>
 							<td bgcolor='#ffffff' align='left' style='padding: 20px 30px 40px 30px; color: #666666; font-family: Lato, Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;'>
-								<p style='margin: 0;'>As We Recieved Reset Password Request For The Rollno <span style='background-color:#808080;color:#ffffff;padding:4px 6px 4px 6px;border-radius:4px;'>$roll_no</span> , We've Sent The Reset Password Link. Just Click The Below Button To Reset Your Password.</p>
+								<p style='margin: 0;'>".$desc.".</p>
 							</td>
 						</tr>
 						<tr>
