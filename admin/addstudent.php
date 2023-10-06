@@ -56,7 +56,7 @@ function sendSalt($email, $salt, $roll_no)
     $mail->send();
 }
     ?>
-    <div class="main-container">
+<div class="main-container">
 
         <!--Upload student data in bulk-->
 
@@ -66,28 +66,28 @@ function sendSalt($email, $salt, $roll_no)
             </div>
             <div class="second">
                 <form enctype='multipart/form-data' action="" method="post">
-                <div class="choose_file">
-                <input size='50' type='file' class='filename' accept='.csv' name='filename[]' required multiple>
-                </div>
-                <?php 
-                $deptq=$conn->prepare("SELECT * FROM dept WHERE college_id=?");
-                $deptq->execute(array(1));
-                $depts=$deptq->fetchAll();
-                $departments = array();
-?>
-                <div class="drop_down">
-                    <select name="dept_id" id="">
-                        <option value="">Select Department</option>
-                        <?php foreach($depts as $dept){
-                            ?>
+                	<div class="choose_file">
+                		<input size='50' type='file' class='filename' accept='.csv' name='filename[]' required multiple>
+                	</div>
+					<?php 
+					$deptq=$conn->prepare("SELECT * FROM dept WHERE college_id=?");
+					$deptq->execute(array(1));
+					$depts=$deptq->fetchAll();
+					$departments = array();
+					?>
+                	<div class="drop_down">
+                    	<select name="dept_id" id="">
+                        	<option value="">Select Department</option>
+                        	<?php foreach($depts as $dept){
+                            	?>
                             <option value="<?php echo $dept['dept_id']; ?>"><?php echo $dept['dept_name']; $departments[$dept['dept_id']]=$dept['dept_name']; ?></option>
                             <?php
-                        } ?>
-                    </select>
-                </div>
-                <div class="submit_button">
-                    <input type="submit" name="submit" value="submit" id="submit_btn"></input>
-                </div>
+                        	} 		?>
+                    	</select>
+                	</div>
+                	<div class="submit_button">
+                    	<input type="submit" name="submit" value="submit" id="submit_btn"></input>
+                	</div>
                 </form>
             </div>
         </div>
@@ -156,11 +156,11 @@ function sendSalt($email, $salt, $roll_no)
                             $insq = $conn->prepare("INSERT INTO `reset_password`(`role`, `user_id`, `salt`, `flag`, `date`)
         VALUES (?,?,?,?,?)");
                             $insq->execute(array('students', $roll_no, $salt, 0, $cur));
-                        } catch (Exception $e) {
+                        } catch (PDOException $e) {
                             $err_code = $e->getCode();
 
-                            if ($err_code == 1062) {
-                                $rows .= "<tr><td>$rollno</td><td>$ay</td><td>$sem</td><td>$branch</td><td>$sec</td><td>$reg</td></tr>";
+                            if ($err_code == 23000) {
+                                $rows .= "<tr><td>$roll_no</td><td>$first_name</td><td>$last_name</td><td>$dob</td><td>$email</td><td>$passout_year</td></tr>";
                             }
                         }
 
@@ -186,18 +186,17 @@ function sendSalt($email, $salt, $roll_no)
 
                         <?php
                         if ($uninserted > 0) {
-                            $duptables += 1;
                         ?>
                             <h3>The Following Rollno's Data is Already in the Database.!!</h3>
                             <table class='table table-striped table-condensed'>
                                 <thead>
                                     <tr>
-                                        <th>roll_no</th>
-                                        <th>ay</th>
-                                        <th>sem</th>
-                                        <th>branch</th>
-                                        <th>sec</th>
-                                        <th>reg</th>
+                                        <th>Roll No</th>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>DOB</th>
+                                        <th>EMAIL</th>
+                                        <th>Passout Year</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -211,114 +210,115 @@ function sendSalt($email, $salt, $roll_no)
                 <?php } else {
                             echo "<br>";
                 ?>
-    </div>
-<?php
+	<?php
                         }
                     } else {
-?>
-<div class="container carde" id='clear<?php echo $_FILES['filename']['name'][$j]; ?>'>
-    <?php echo "<h1>" . "File " . $_FILES['filename']['name'][$j] . " uploaded successfully." . "</h1>";
+	?>
+	<div class="container carde" id='clear<?php echo $_FILES['filename']['name'][$j]; ?>'>
+    	<?php echo "<h1>" . "File " . $_FILES['filename']['name'][$j] . " uploaded successfully." . "</h1>";
 
 
                         echo $errmsg . "<br>";
-    ?>
-</div>
-<?php
+    	?>
+	</div>
+	<?php
                     }
 
                     fclose($handle);
                 }
-?>
+	?>
 
-<?php } ?>
+	<?php } ?>
 
-<!--upload single student data-->
-</div>
-<div style="margin-left: 240px;
-    padding: 20px;" class="table-wrapper">
-		<div class="table-title">
-			<div class="row">
-				<div class="col-sm-6">
-					<h2>Manage <b>Students </b></h2>
-				</div>
-				<div class="col-sm-6 text-end">
-					<a href="#addStudent" id='addStudentbtn' class="btn btn-success" data-bs-toggle="modal"><i class="fa-solid fa-circle-plus"></i> <span>Add New Student</span></a>
-					<a href="JavaScript:void(0);" class="btn btn-danger" id="delete_multiple"><i class="fa-solid fa-circle-minus"></i> <span>Delete</span></a>						
+	<!--upload single student data-->
+	<div style="margin: auto;
+				margin-top:20px;
+    	padding: 10px;" class="table-wrapper">
+			<div class="table-title">
+				<div class="row">
+					<div class="col-sm-6">
+						<h2>Manage <b>Students </b></h2>
+					</div>
+					<div class="col-sm-6 text-end">
+						<a href="#addStudent" id='addStudentbtn' class="btn btn-success" data-bs-toggle="modal"><i class="fa-solid fa-circle-plus"></i> <span>Add New Student</span></a>
+						<a href="JavaScript:void(0);" class="btn btn-danger" id="delete_multiple"><i class="fa-solid fa-circle-minus"></i> <span>Delete</span></a>						
+					</div>
 				</div>
 			</div>
-		</div>
-		<div class="table-responsive">
-		<table id="students_table" class="table table-striped table-hover">
-			<thead>
-				<tr>
-					<th>
-						<span class="custom-checkbox">
-							<input type="checkbox" id="selectAll">
-							<label for="selectAll"></label>
-						</span>
-					</th>
-					<th class='align-middle text-center'>SL NO</th>
-					<th class='align-middle text-center'>ROLL NO</th>
-					<th class='align-middle text-center'>FIRST NAME</th>
-					<th class='align-middle text-center'>LAST NAME</th>
-					<th class='align-middle text-center'>DOB</th>
-					<th class='align-middle text-center'>EMAIL</th> 
-					<th class='align-middle text-center'>DEPT NAME</th>
-					<th class='align-middle text-center'>PASSOUT YEAR</th>
-                    <th class='align-middle text-center'>ACTIONS</th>
-				</tr>
-			</thead>
-			<tbody>
+			<div class="table-responsive">
+				<table id="students_table" class="table table-striped table-hover">
+					<thead>
+						<tr>
+							<th>
+								<span class="custom-checkbox">
+									<input type="checkbox" id="selectAll">
+									<label for="selectAll"></label>
+								</span>
+							</th>
+							<th class='align-middle text-center'>SL NO</th>
+							<th class='align-middle text-center'>ROLL NO</th>
+							<th class='align-middle text-center'>FIRST NAME</th>
+							<th class='align-middle text-center'>LAST NAME</th>
+							<th class='align-middle text-center'>DOB</th>
+							<th class='align-middle text-center'>EMAIL</th> 
+							<th class='align-middle text-center'>DEPT NAME</th>
+							<th class='align-middle text-center'>PASSOUT YEAR</th>
+							<th class='align-middle text-center'>ACTIONS</th>
+						</tr>
+					</thead>
+					<tbody>
 			
-			<?php
-			$result = $conn->prepare("SELECT * FROM students WHERE dept_id in (SELECT dept_id from dept WHERE college_id=?)");
-            $result->execute(array(1));
-            
-            $arrs = $result->fetchAll();
-				$i=1;
-				foreach($arrs as $row) {
-			?>
-			<tr id="<?php echo $row['roll_no']; ?>">
-			<td>
-						<span class="custom-checkbox">
-							<input type="checkbox" class="user_checkbox" data-user-id="<?php echo $row['roll_no']; ?>">
-							<label for="checkbox2"></label>
-						</span>
-					</td>
-				<td class='align-middle text-center'><?php echo $i; ?></td>
-				<td class='align-middle text-center'><?php echo $row["roll_no"]; ?></td>
-				<td class='align-middle text-center'><?php echo $row["first_name"]; ?></td>
-				<td class='align-middle text-center'><?php echo $row["last_name"]; ?></td>
-				<td class='align-middle text-center' style="white-space:pre;"><?php echo $row["dob"]; ?></td>
-				<td class='align-middle text-center'><?php echo $row["email"]; ?></td>
-				<td class='align-middle text-center'><?php echo $departments[$row['dept_id']]; ?></td>
-                <td class='align-middle text-center'><?php echo $row["passout_year"]; ?></td>
-				<td class='align-middle text-center'>
-					<a style="text-decoration:none;" href="#editStudent" class="edit" data-bs-toggle="modal">
-					<i class="fa-solid fa-pen-to-square update"
-						data-id="<?php echo $row['roll_no']; ?>"
-						data-firstname="<?php echo $row['first_name']; ?>"
-						data-lastname="<?php echo $row["last_name"]; ?>"
-						data-dob="<?php echo $row["dob"]; ?>"
-						data-email="<?php echo $row["email"]; ?>"
-						data-deptid="<?php echo $row["dept_id"]; ?>"
-                        data-passoutyear="<?php echo $row["passout_year"]; ?>"
-						title="Edit"></i>
-					</a>
-					<a href="#deleteStudent" class="delete" data-id="<?php echo $row['roll_no']; ?>" data-bs-toggle="modal"><i class="fa-sharp fa-solid fa-trash" title="Delete"></i>
-						</a><br>
-                    <a href="#" class="regenerate" data-roll="<?php echo $row['roll_no']; ?>">Reset Password</a>
-				</td>
-			</tr>
-			<?php
-			$i++;
-			}
-			?>
-			</tbody>
-		</table>
-		</div>
-		
-	</div>
+						<?php
+						$result = $conn->prepare("SELECT * FROM students WHERE dept_id in (SELECT dept_id from dept WHERE college_id=?)");
+						$result->execute(array(1));
+						
+						$arrs = $result->fetchAll();
+							$i=1;
+							foreach($arrs as $row) {
+						?>
+						<tr id="<?php echo $row['roll_no']; ?>">
+						<td>
+									<span class="custom-checkbox">
+										<input type="checkbox" class="user_checkbox" data-user-id="<?php echo $row['roll_no']; ?>">
+										<label for="checkbox2"></label>
+									</span>
+								</td>
+							<td class='align-middle text-center'><?php echo $i; ?></td>
+							<td class='align-middle text-center'><?php echo $row["roll_no"]; ?></td>
+							<td class='align-middle text-center'><?php echo $row["first_name"]; ?></td>
+							<td class='align-middle text-center'><?php echo $row["last_name"]; ?></td>
+							<td class='align-middle text-center' style="white-space:pre;"><?php echo $row["dob"]; ?></td>
+							<td class='align-middle text-center'><?php echo $row["email"]; ?></td>
+							<td class='align-middle text-center'><?php echo $departments[$row['dept_id']]; ?></td>
+							<td class='align-middle text-center'><?php echo $row["passout_year"]; ?></td>
+							<td class='align-middle text-center' id="flex_items">
+								<a style="text-decoration:none;" href="#editStudent" class="edit" data-bs-toggle="modal">
+								<i class="fa-solid fa-pen-to-square update " 
+									style="color: #fff;"
+									data-id="<?php echo $row['roll_no']; ?>"
+									data-firstname="<?php echo $row['first_name']; ?>"
+									data-lastname="<?php echo $row["last_name"]; ?>"
+									data-dob="<?php echo $row["dob"]; ?>"
+									data-email="<?php echo $row["email"]; ?>"
+									data-deptid="<?php echo $row["dept_id"]; ?>"
+									data-passoutyear="<?php echo $row["passout_year"]; ?>"
+									title="Edit"></i>
+								</a>
+								<a href="#deleteStudent" class="delete" data-id="<?php echo $row['roll_no']; ?>" data-bs-toggle="modal"><i class="fa-sharp fa-solid fa-trash" style="color: #fff;" title="Delete"></i>
+									</a>
+								<a href="#" class="regenerate" data-roll="<?php echo $row['roll_no']; ?>"><i class="fa-solid fa-lock" style="color: #ffffff;"></i></a>
+							</td>
+						</tr>
+						<?php
+						$i++;
+						}
+						?>
+						</tbody>
+					</table>
+					</div>
+				
+				</div>
+</div>
     <script>
         $(document).ready( function () {
     $('#students_table').DataTable({

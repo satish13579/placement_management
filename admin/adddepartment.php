@@ -19,81 +19,82 @@ use PHPMailer\PHPMailer\Exception;
 
 require 'vendor/autoload.php';
     ?>
-    <div class="main-container">
+<div class="main-container">
 
-<!--upload single student data-->
-</div>
-<div style="margin-left: 240px;
-    padding: 20px;" class="table-wrapper">
-		<div class="table-title">
-			<div class="row">
-				<div class="col-sm-6">
-					<h2>Manage <b>Departments </b></h2>
+		<!--upload single student data-->
+
+		<div style="margin:auto;
+			padding: 20px;" class="table-wrapper">
+				<div class="table-title">
+					<div class="row">
+						<div class="col-sm-6">
+							<h2>Manage <b>Departments </b></h2>
+						</div>
+						<div class="col-sm-6 text-end">
+							<a href="#addStudent" id='addStudentbtn' class="btn btn-success" data-bs-toggle="modal"><i class="fa-solid fa-circle-plus"></i> <span>Add New Department</span></a>
+							<a href="JavaScript:void(0);" class="btn btn-danger" id="delete_multiple"><i class="fa-solid fa-circle-minus"></i> <span>Delete</span></a>						
+						</div>
+					</div>
 				</div>
-				<div class="col-sm-6 text-end">
-					<a href="#addStudent" id='addStudentbtn' class="btn btn-success" data-bs-toggle="modal"><i class="fa-solid fa-circle-plus"></i> <span>Add New Department</span></a>
-					<a href="JavaScript:void(0);" class="btn btn-danger" id="delete_multiple"><i class="fa-solid fa-circle-minus"></i> <span>Delete</span></a>						
+				<div class="table-responsive">
+				<table id="students_table" class="table table-striped table-hover">
+					<thead>
+						<tr>
+							<th>
+								<span class="custom-checkbox">
+									<input type="checkbox" id="selectAll">
+									<label for="selectAll"></label>
+								</span>
+							</th>
+							<th class='align-middle text-center'>SL NO</th>
+							<th class='align-middle text-center'>DEPARTMENT NAME</th>
+							<th class='align-middle text-center'>EMAIL</th>
+							<th class='align-middle text-center'>ACTIONS</th>
+						</tr>
+					</thead>
+					<tbody>
+					
+					<?php
+					$result = $conn->prepare("SELECT * FROM dept WHERE college_id=?");
+					$result->execute(array(1));
+					
+					$arrs = $result->fetchAll();
+						$i=1;
+						foreach($arrs as $row) {
+					?>
+					<tr id="<?php echo $row['dept_id']; ?>">
+					<td>
+								<span class="custom-checkbox">
+									<input type="checkbox" class="user_checkbox" data-user-id="<?php echo $row['dept_id']; ?>">
+									<label for="checkbox2"></label>
+								</span>
+							</td>
+						<td class='align-middle text-center'><?php echo $i; ?></td>
+						<td class='align-middle text-center'><?php echo $row["dept_name"]; ?></td>
+						<td class='align-middle text-center'><?php echo $row["email"]; ?></td>
+						<td class='align-middle text-center' id="flex_items">
+							<a style="text-decoration:none;" href="#editStudent" class="edit" data-bs-toggle="modal">
+							<i class="fa-solid fa-pen-to-square update"
+								style="color: #fff;"
+								data-id="<?php echo $row['dept_id']; ?>"
+								data-deptname="<?php echo $row['dept_name']; ?>"
+								data-email="<?php echo $row["email"]; ?>"
+								title="Edit"></i>
+							</a>
+							<a href="#deleteStudent" class="delete" data-id="<?php echo $row['dept_id']; ?>" data-bs-toggle="modal"><i class="fa-sharp fa-solid fa-trash" style="color: #fff;" title="Delete"></i>
+								</a>
+							<a href="#" class="regenerate" data-roll="<?php echo $row['dept_id']; ?>"><i class="fa fa-solid fa-lock" style="color: #fff;"></i></a>
+						</td>
+					</tr>
+					<?php
+					$i++;
+					}
+					?>
+					</tbody>
+				</table>
 				</div>
 			</div>
-		</div>
-		<div class="table-responsive">
-		<table id="students_table" class="table table-striped table-hover">
-			<thead>
-				<tr>
-					<th>
-						<span class="custom-checkbox">
-							<input type="checkbox" id="selectAll">
-							<label for="selectAll"></label>
-						</span>
-					</th>
-					<th class='align-middle text-center'>SL NO</th>
-					<th class='align-middle text-center'>DEPARTMENT NAME</th>
-					<th class='align-middle text-center'>EMAIL</th>
-                    <th class='align-middle text-center'>ACTIONS</th>
-				</tr>
-			</thead>
-			<tbody>
-			
-			<?php
-			$result = $conn->prepare("SELECT * FROM dept WHERE college_id=?");
-            $result->execute(array(1));
-            
-            $arrs = $result->fetchAll();
-				$i=1;
-				foreach($arrs as $row) {
-			?>
-			<tr id="<?php echo $row['dept_id']; ?>">
-			<td>
-						<span class="custom-checkbox">
-							<input type="checkbox" class="user_checkbox" data-user-id="<?php echo $row['dept_id']; ?>">
-							<label for="checkbox2"></label>
-						</span>
-					</td>
-				<td class='align-middle text-center'><?php echo $i; ?></td>
-				<td class='align-middle text-center'><?php echo $row["dept_name"]; ?></td>
-				<td class='align-middle text-center'><?php echo $row["email"]; ?></td>
-				<td class='align-middle text-center'>
-					<a style="text-decoration:none;" href="#editStudent" class="edit" data-bs-toggle="modal">
-					<i class="fa-solid fa-pen-to-square update"
-						data-id="<?php echo $row['dept_id']; ?>"
-						data-deptname="<?php echo $row['dept_name']; ?>"
-						data-email="<?php echo $row["email"]; ?>"
-						title="Edit"></i>
-					</a>
-					<a href="#deleteStudent" class="delete" data-id="<?php echo $row['dept_id']; ?>" data-bs-toggle="modal"><i class="fa-sharp fa-solid fa-trash" title="Delete"></i>
-						</a><br>
-                    <a href="#" class="regenerate" data-roll="<?php echo $row['dept_id']; ?>">Reset Password</a>
-				</td>
-			</tr>
-			<?php
-			$i++;
-			}
-			?>
-			</tbody>
-		</table>
-		</div>
-		
-	</div>
+</div>
     <script>
         $(document).ready( function () {
     $('#students_table').DataTable({

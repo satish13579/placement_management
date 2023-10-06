@@ -73,8 +73,9 @@ body{
 }
 
 .main-container{
-    margin-left: 240px;
+    margin-left: 200px;
     padding: 20px;
+    
 }
 
 .bulk{
@@ -83,17 +84,20 @@ body{
     gap: 20px;
     background-color: transparent;
     padding: 10px 20px;
+    border: 2px solid var(--bgcolor);
     border-radius: 4px;
+    box-shadow: rgb(219, 219, 219) 3px 3px 6px 0px inset, 
+    rgba(221, 220, 220, 0.5) -3px -3px 6px 1px inset; 
 }
 
-.bulk .second{
+.bulk .second form{
     display: flex;
     flex-direction: row;
     gap: 20px;
 }
 
 .first h2{
-    color: var(--textcolor, #fff);
+    color: var(--bgcolor);
     font-size: 26px;
 }
 
@@ -103,6 +107,8 @@ body{
     border-radius: 4px;
     background-color: transparent;
     padding: 5px 10px;
+    box-shadow: rgb(219, 219, 219) 3px 3px 6px 0px inset, 
+    rgba(221, 220, 220, 0.5) -3px -3px 6px 1px inset; 
 }
 
 
@@ -113,10 +119,12 @@ body{
 
 
 .drop_down select{
-    border: 1px solid  var(--bgcolor);
+    border: 2px solid  var(--bgcolor);
     color: #141427;
-    padding: 5px 10px;
-    border-radius: 4px
+    padding: 8px 10px;
+    border-radius: 4px;
+    box-shadow: rgb(219, 219, 219) 3px 3px 6px 0px inset, 
+    rgba(221, 220, 220, 0.5) -3px -3px 6px 1px inset; 
 }
 
 
@@ -125,9 +133,11 @@ body{
     border: 2px solid var(--bgcolor);
     background-color: transparent;
     color: var(--bgcolor);
-    padding: 5px 10px;
+    padding: 8px 10px;
     border-radius: 4px;
     transition: all .1s;
+    box-shadow: rgb(219, 219, 219) 3px 3px 6px 0px inset, 
+    rgba(221, 220, 220, 0.5) -3px -3px 6px 1px inset; 
 }
 
 #submit_btn:active{
@@ -137,4 +147,65 @@ body{
 #submit_btn:hover{
     cursor: pointer;
 }
+
+.carde{
+    background-color: transparent;
+    padding: 10px 20px;
+    border: 2px solid var(--bgcolor);
+    border-radius: 6px;
+    color: var(--bgcolor);
+    margin-block: 20px;
+    box-shadow: rgb(219, 219, 219) 3px 3px 6px 0px inset, 
+    rgba(221, 220, 220, 0.5) -3px -3px 6px 1px inset; 
+}
+
+.carde h1{
+    font-size: 20px;
+    color: var(--bgcolor);
+}
+
+.carde h3{
+    font-size: 16px;
+    color: var(--bgcolor);
+}
+
+.carde table{
+    border-radius: 4px;
+    margin-bottom: 0px;
+}
+
+.carde table td,th{
+    border-radius: 2px;
+}
+
+.table-wrapper{
+    border: 2px solid var(--bgcolor);
+    border-radius: 4px;
+    box-shadow: rgb(219, 219, 219) 3px 3px 6px 0px inset, 
+    rgba(221, 220, 220, 0.5) -3px -3px 6px 1px inset; 
+    margin-bottom: 30px;
+}
+
+.dataTables_wrapper{
+    font-size: 12px;
+}
+
+#students_table th, #students_table td{
+    border: 1px solid rgba(255, 255, 255, .4);
+    color: #fff;
+    background-color: var(--bgcolor);
+}
+
+#students_table{
+    color: #fff;
+    padding-block: 10px;
+}
+
+
+#flex_items{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
 

@@ -22,7 +22,7 @@
 <body>
     <div class="dashboard_container">
         <div class="main">
-            <h2 class="admin-heading">Admin</h2>
+            <h2 class="admin-heading"><i class="fa fa-solid fa-user" style="color:#fff"></i>Admin</h2>
             <div class="hr"></div>
             <ul>
                 <li><a href="#" class="ul-el" aria-expanded="false">Dashboard</a></li>
