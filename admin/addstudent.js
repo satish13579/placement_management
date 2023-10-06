@@ -140,6 +140,29 @@ $(document).on("click", "#delete_multiple", function() {
         }  
     } 
 });
+
+$(document).on("click", ".regenerate", function() {
+    $.ajax({
+        type: "POST",
+        url: "student_actions.php",
+        cache:false,
+        data:{
+            type: 'student_reset_generate',
+            roll_no : $(this).attr("data-roll")
+        },
+        success: function(dataResult) {
+            var dataResult = JSON.parse(dataResult);
+            if(dataResult.statusCode==200){
+            alert('Password Reset Email has sent to '+dataResult.email); 
+            window.location = window.location.href;
+            }else if(dataResult.statusCode==400){
+                alert(dataResult.msg);
+            }
+        } 
+    }); 
+});
+
+
 $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();
     var checkbox = $('table tbody input[type="checkbox"]');

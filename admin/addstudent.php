@@ -49,7 +49,7 @@ function sendSalt($email, $salt, $roll_no)
 
     $mail->isHTML(true);
 
-    $mail->Subject = "Account Password Reset Link";
+    $mail->Subject = "Account Password Generation Link";
     $link = $BASE_URL . 'reset_password.php?salt=' . $salt;
     $mail->Body = reset_template($link, $roll_no);
 
@@ -306,7 +306,8 @@ function sendSalt($email, $salt, $roll_no)
 						title="Edit"></i>
 					</a>
 					<a href="#deleteStudent" class="delete" data-id="<?php echo $row['roll_no']; ?>" data-bs-toggle="modal"><i class="fa-sharp fa-solid fa-trash" title="Delete"></i>
-						</a>
+						</a><br>
+                    <a href="#" class="regenerate" data-roll="<?php echo $row['roll_no']; ?>">Reset Password</a>
 				</td>
 			</tr>
 			<?php
