@@ -91,7 +91,7 @@ input{
     text-align: center;
 }
 
-.login-btn{
+#login-btn{
     background-color: transparent;
     color: rgb(20, 20, 39);
     padding: 5px 20px;
@@ -99,15 +99,17 @@ input{
     transition: all .2s;
     border-radius: 4px;
     font-weight: bold;
+    width: 50%;
+    margin: auto;
 }
 
-.login-btn:hover{
+#login-btn:hover{
     background-color: rgb(20, 20, 39);
     color: #fff;
     cursor: pointer;
 }
 
-.login-btn:active{
+#login-btn:active{
     transform: scale(.95);
 }
 
@@ -139,6 +141,12 @@ input{
     width: auto;
 }
 
+.modal_popup{
+    position: absolute;
+    transform: translateY(-50%) scale(.1);
+    visibility: hidden;
+    transition: all .3s;
+}
 
 .modal_body{
     background-color: rgb(20, 20, 39);
@@ -150,16 +158,10 @@ input{
     gap: 20px;
 }
 
-.modal_popup{
-    position: absolute;
-    transform: translateY(-50%) scale(.1);
-    visibility: hidden;
-    transition: all .3s;
-}
 
 .popup_open{
     position: absolute;
-    transform: translateY(-50%) scale(1);
+    transform: translateY(-90%) scale(1) translateX(6%);
     visibility: visible;
     transition: all .3s;
     box-shadow: 2px 2px 2px 1000px rgb(26 22 22 / 80%);

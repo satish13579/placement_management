@@ -30,7 +30,7 @@ require 'vendor/autoload.php';
 						<div class="col-sm-6">
 							<h2>Manage <b>Departments </b></h2>
 						</div>
-						<div class="col-sm-6 text-end">
+						<div class="col-sm-6 text-end" id="btns">
 							<a href="#addStudent" id='addStudentbtn' class="btn btn-success" data-bs-toggle="modal"><i class="fa-solid fa-circle-plus"></i> <span>Add New Department</span></a>
 							<a href="JavaScript:void(0);" class="btn btn-danger" id="delete_multiple"><i class="fa-solid fa-circle-minus"></i> <span>Delete</span></a>						
 						</div>

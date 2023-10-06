@@ -188,32 +188,34 @@ function sendSalt($email, $salt, $roll_no)
                         if ($uninserted > 0) {
                         ?>
                             <h3>The Following Rollno's Data is Already in the Database.!!</h3>
-                            <table class='table table-striped table-condensed'>
-                                <thead>
-                                    <tr>
-                                        <th>Roll No</th>
-                                        <th>First Name</th>
-                                        <th>Last Name</th>
-                                        <th>DOB</th>
-                                        <th>EMAIL</th>
-                                        <th>Passout Year</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php echo $rows;
-                                    ?>
-                                </tbody>
-                            </table>
-                            <?php echo "<br>"; ?>
+							<div class="table-responsive">
 
-                    </div>
-                <?php } else {
-                            echo "<br>";
-                ?>
-	<?php
-                        }
-                    } else {
-	?>
+										<table class='table table-striped table-condensed'>
+											<thead>
+												<tr>
+													<th>Roll No</th>
+													<th>First Name</th>
+													<th>Last Name</th>
+													<th>DOB</th>
+													<th>EMAIL</th>
+													<th>Passout Year</th>
+												</tr>
+											</thead>
+											<tbody>
+												<?php echo $rows;
+												?>
+											</tbody>
+										</table>
+										<?php echo "<br>"; ?>
+							</div>
+					</div>
+								<?php } else {
+										echo "<br>";
+									?>
+								<?php
+									}
+								} else {
+								?>
 	<div class="container carde" id='clear<?php echo $_FILES['filename']['name'][$j]; ?>'>
     	<?php echo "<h1>" . "File " . $_FILES['filename']['name'][$j] . " uploaded successfully." . "</h1>";
 
