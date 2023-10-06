@@ -1,5 +1,6 @@
 <?php
-include '../conn.php';
+include 'auth.php';
+session_start();
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
@@ -163,6 +164,29 @@ if (count($_POST) > 0) {
                 $res = $sql->execute(array($id));
             } catch (Exception $e) {
                 $err .= "Error For $id\nError code: " . $e->getCode() . "\nError Message: " . $e->getMessage();
+            }
+        }
+        if ($err == '') {
+            echo json_encode(array("statusCode" => 200));
+        } else {
+            echo json_encode(array("statusCode" => 400, "err" => $err));
+        }
+    } else if ($_POST['type'] == 'placement_upload'){
+        $company= $_POST['company'];
+        $package=$_POST['package'];
+        $job_role=$_POST['job_role'];
+        $job_status = $_POST['job_status'];
+        $roll_nos = $_POST['roll_nos'];
+        $date = date('Y-m-d');
+        $err = '';
+        for ($i = 0; $i < count($roll_nos); $i++) {
+            $id = $roll_nos[$i];
+            try {
+                $sql = $conn->prepare("INSERT INTO `placements`(`roll_no`, `company`, `package`, `date`, `job_role`, `job_status`, `acceptance`,`college_id`)
+                 VALUES (?,?,?,?,?,?,?,?)");
+                $res = $sql->execute(array($id,$company,$package,$date,$job_role,$job_status,0,$_SESSION['id']));
+            } catch (PDOException $e) {
+                $err .= "Error For $id roll no\nError code: " . $e->getCode() . "\nError Message: " . $e->getMessage();
             }
         }
         if ($err == '') {

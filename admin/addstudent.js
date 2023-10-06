@@ -1,3 +1,43 @@
+$(document).on('click','#place-add',function(e) { 
+    var form = document.querySelector("#placement_form");
+    if(!form.checkValidity()){
+        var sbtn=document.querySelector("#place-add-sub");
+        sbtn.click();
+    }
+    else{
+    var user = [];
+    $(".user_checkbox:checked").each(function() {
+        user.push($(this).data('user-id'));
+    });
+    if(user.length <=0) {
+        alert("Please Select Students."); 
+        return;
+    } 
+
+    $.ajax({
+        data: {"company":$('#company').val(),
+    "package":$("#package").val(),
+    "job_role":$("#role").val(),
+    "job_status":$("#job_status").val(),
+    "type":"placement_upload",
+    "roll_nos":user
+    },
+        type: "post",
+        url: "student_actions.php",
+        success: function(dataResult){
+                var dataResult = JSON.parse(dataResult);
+                if(dataResult.statusCode==200){
+                    $('#addStudent').modal('hide');
+                    alert('Placement Data added successfully !'); 
+                    window.location = window.location.href;						
+                }
+                else if(dataResult.statusCode==400){
+                   alert(dataResult.err);
+                }
+        }
+    });
+}
+});
 
 
 $(document).on('click','#btn-add',function(e) { 

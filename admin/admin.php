@@ -25,7 +25,7 @@
             <h2 class="admin-heading"><i class="fa fa-solid fa-user" style="color:#fff"></i>Admin</h2>
             <div class="hr"></div>
             <ul>
-                <li><a href="#" class="ul-el" aria-expanded="false">Dashboard</a></li>
+                <li><a href="./dashboard.php" class="ul-el" aria-expanded="false">Dashboard</a></li>
                 <li><a href="./addstudent.php" class="ul-el" aria-expanded="false">Manage Student</a></li>
                 <li><a href="./adddepartment.php" class="ul-el" aria-expanded="false">Manage Departments</a></li>
             </ul>

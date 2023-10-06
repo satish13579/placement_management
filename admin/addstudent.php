@@ -12,7 +12,7 @@
 <body>
 
     <?php include 'admin.php';
-    include '../conn.php';
+    include 'auth.php';
     use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
@@ -240,6 +240,7 @@ function sendSalt($email, $salt, $roll_no)
 						<h2>Manage <b>Students </b></h2>
 					</div>
 					<div class="col-sm-6 text-end">
+                        <a href="#addPlacement"class="btn btn-primary"data-bs-toggle="modal"><i class="fa-solid fa-upload"></i> <span>Add Placement</span></a>
 						<a href="#addStudent" id='addStudentbtn' class="btn btn-success" data-bs-toggle="modal"><i class="fa-solid fa-circle-plus"></i> <span>Add New Student</span></a>
 						<a href="JavaScript:void(0);" class="btn btn-danger" id="delete_multiple"><i class="fa-solid fa-circle-minus"></i> <span>Delete</span></a>						
 					</div>
@@ -328,6 +329,48 @@ function sendSalt($email, $salt, $roll_no)
 } );
     </script>
 </body>
+
+<!-- Add Placement HTML -->
+<div id="addPlacement" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form id="placement_form">
+				<div class="modal-header">						
+					<h4 class="modal-title">Add Placement</h4>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">	
+					<div class="form-group">
+						<label>COMPANY</label>
+						<input type="text" id="company" name="company" class="form-control" required>
+					</div>
+					<div class="form-group">
+						<label>PACKAGE</label>
+						<input type="number" min="0" id="package" name="package" class="form-control" required>
+					</div>				
+					<div class="form-group">
+						<label>JOB ROLE</label>
+						<input type="text" id="role" name="role" class="form-control" required>
+					</div>
+                    <div class="form-group">
+						<label>JOB STATUS</label>
+						<select id="job_status" name="job_status" class="form-control" required>
+                            <option value="">Select Job Status</option>
+                            <option value="1">Placed</option>
+                            <option value="0">Rejected</option>
+                        </select>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<input type="hidden" value="placement_upload" name="type">
+					<input id="place-add-sub" type='submit' style="display:none">
+					<input type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" value="Cancel">
+					<button type="button" class="btn btn-primary" id="place-add">Add</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
 
 
 <!-- Add Modal HTML -->
