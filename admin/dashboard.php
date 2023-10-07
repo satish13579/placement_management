@@ -111,6 +111,13 @@ $email = $_SESSION['email'];
             overflow-x: auto;
         }
 
+        .overall_container h1{
+            color: var(--bgcolor);
+            font-size: 20px;
+            margin-block: 10px;
+            text-align: center;
+        }
+
         @media screen and (width <= 500px){
             form{
                 width: auto;
@@ -165,12 +172,15 @@ $email = $_SESSION['email'];
             <div class="overall_container">
                 <div>                                                                                  
                     <canvas id="myPieChart" width="200" height="400"></canvas>
+                    <h1>Placed V/S Rejected </h1>
                 </div>
                 <div>                                                                                  
                     <canvas id="jobTitlesChart" width="200" height="400"></canvas>
+                    <h1>No:Of Jobs Per Role</h1>
                 </div>
                 <div>                                                                                  
                     <canvas id="CompanyChart" width="200" height="400"></canvas>
+                    <h1>Companies Placed</h1>
                 </div>
             </div>                                                                                            
 
