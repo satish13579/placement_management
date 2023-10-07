@@ -1,0 +1,323 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600&display=swap');
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    font-family: 'Poppins', sans-serif;
+}
+
+
+:root{
+    --bgcolor: #102435;
+}
+
+body{
+    background-color: var(--textcolor);
+}
+
+.dashboard_container{
+    position: relative;
+}
+
+.main{
+    background-color: var(--bgcolor, #102435);
+    height: 100vh;
+    width: 230px ;
+    position: fixed;
+    top: 0;
+    left: 0;
+    box-shadow: 2px 0px 13px rgb(0, 0, 0);
+}
+
+.admin-heading{
+    color: #fff;
+    padding: 10px 40px;
+    text-align: center;
+    font-size: 26px;
+}
+
+.hr{
+    margin: 0;
+    padding: 1px;
+    background-color: var(--textcolor, #fff);
+}
+
+.main ul a:hover{
+    color: skyblue;
+    border-left: 3px solid #fff;
+    padding-inline: 10px;
+    transition: all .1s;
+}
+
+.main ul{
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    margin-top: 20px;
+    padding-left: 8px !important;
+}
+
+
+.main ul a{
+    text-decoration: none;
+    color: var(--textcolor, #fff);
+    white-space: pre;
+    font-size: 16px;
+}
+
+.main-container{
+    margin-left: 230px;
+    padding: 20px;
+    
+}
+
+.bulk{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background-color: transparent;
+    padding: 10px 20px;
+    border: 2px solid var(--bgcolor);
+    border-radius: 4px;
+    box-shadow: rgb(219, 219, 219) 3px 3px 6px 0px inset, 
+    rgba(221, 220, 220, 0.5) -3px -3px 6px 1px inset; 
+}
+
+.bulk .second form{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.first h2{
+    color: var(--bgcolor);
+    font-size: 26px;
+}
+
+.choose_file input{
+    color: var(--bgcolor);
+    border: 2px solid var(--bgcolor);
+    border-radius: 4px;
+    background-color: transparent;
+    padding: 5px 10px;
+    box-shadow: rgb(219, 219, 219) 3px 3px 6px 0px inset, 
+    rgba(221, 220, 220, 0.5) -3px -3px 6px 1px inset; 
+}
+
+
+
+.choose_file input:hover{
+    cursor: pointer;
+}
+
+
+.drop_down select{
+    border: 2px solid  var(--bgcolor);
+    color: #141427;
+    padding: 8px 10px;
+    border-radius: 4px;
+    box-shadow: rgb(219, 219, 219) 3px 3px 6px 0px inset, 
+    rgba(221, 220, 220, 0.5) -3px -3px 6px 1px inset; 
+}
+
+
+
+#submit_btn{
+    border: 2px solid var(--bgcolor);
+    background-color: transparent;
+    color: var(--bgcolor);
+    padding: 8px 10px;
+    border-radius: 4px;
+    transition: all .1s;
+    box-shadow: rgb(219, 219, 219) 3px 3px 6px 0px inset, 
+    rgba(221, 220, 220, 0.5) -3px -3px 6px 1px inset; 
+}
+
+#submit_btn:active{
+    transform: scale(.95);
+}
+
+#submit_btn:hover{
+    cursor: pointer;
+}
+
+.carde{
+    background-color: transparent;
+    padding: 10px 20px;
+    border: 2px solid var(--bgcolor);
+    border-radius: 6px;
+    color: var(--bgcolor);
+    margin-block: 20px;
+    box-shadow: rgb(219, 219, 219) 3px 3px 6px 0px inset, 
+    rgba(221, 220, 220, 0.5) -3px -3px 6px 1px inset; 
+}
+
+.carde h1{
+    font-size: 20px;
+    color: var(--bgcolor);
+}
+
+.carde h3{
+    font-size: 16px;
+    color: var(--bgcolor);
+}
+
+.carde table{
+    border-radius: 4px !important;
+    margin-bottom: 0px !important;
+}
+
+.carde table td,th{
+    border-radius: 2px !important;
+}
+
+.table-wrapper{
+    border: 2px solid var(--bgcolor);
+    border-radius: 4px;
+    box-shadow: rgb(219, 219, 219) 3px 3px 6px 0px inset, 
+    rgba(221, 220, 220, 0.5) -3px -3px 6px 1px inset; 
+    margin-bottom: 30px;
+}
+
+.dataTables_wrapper{
+    font-size: 12px;
+}
+
+#students_table th, #students_table td{
+    border: 1px solid rgba(255, 255, 255, .4);
+    color: #fff;
+    background-color: var(--bgcolor);
+}
+
+#students_table{
+    color: #fff;
+    padding-block: 10px;
+}
+
+
+#flex_items{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+
+.offcanvas_mobile{
+    position: fixed;
+    background-color: var(--bgcolor);
+    width: 100%;
+    display: none;
+}
+
+.navbar_main{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#hamburger_menu{
+    display: block;
+}
+
+.sidebar_items{
+    display: none;
+}
+
+
+@media screen and (width <= 500px){
+    .main-container{
+        padding-top: 80px;
+        padding-bottom: 40px;
+    }
+
+
+    .offcanvas_mobile{
+        display: block;
+        z-index: 3;
+    }
+
+    .dashboard_container{
+        display: none;
+    }
+
+    .main-container{
+        margin-left: 0px;
+    }
+
+    .bulk .second form{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+
+    .table-title #btns{
+        padding-block: 20px;
+    }
+
+    #side_item{
+        padding-right: 16px;
+        transition: all .2s;
+    }
+
+    #side_item:hover{
+        cursor: pointer;
+    }
+
+    #side_item{
+        padding-block: 10px;
+        padding-left: 0px !important;
+        background-color: transparent;
+        border: none;
+    }
+
+    #item_side{
+        padding-block: 10px;
+        padding-left: 0px !important;
+        padding-right: 10px;
+        background-color: transparent;
+        border: none;
+    }
+
+    .sidebar_items{
+        background-color: var(--bgcolor);
+        height: 100vh;
+        position: fixed;
+        width: 300px;
+        top: 9%;
+        right: 0;
+        padding-block: 20px;
+        padding-inline: 10px;
+        z-index: 2;
+        transition: all .3s;
+        box-shadow: 2px 2px 2px 1000px rgb(26 22 22 / 80%);
+        display: none;
+    }
+
+    .sidebar_items ul{
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+    }
+
+    .sidebar_items ul a{
+        text-decoration: none;
+        color: var(--textcolor, #fff);
+        white-space: pre;
+        font-size: 16px;
+
+    }
+
+    .sidebar_items ul a:hover{
+        color: skyblue;
+        border-left: 3px solid #fff;
+        padding-inline: 10px;
+        transition: all .1s;
+    }
+
+}
+

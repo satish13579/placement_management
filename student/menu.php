@@ -25,6 +25,7 @@
             <ul>
                 <li><i class="fa-solid fa-flag" style="color: #ffffff;"></i>&nbsp;<a href="./index.php" class="ul-el" aria-expanded="false">History</a></li>
                 <li><i class="fa-solid fa-users" style="color: #ffffff;"></i>&nbsp;<a href="./profile.php" class="ul-el" aria-expanded="false">Profile</a></li>
+                <li><i class="fa-solid fa-arrow-right-from-bracket" style="color: #ffffff;"></i>&nbsp;&nbsp;<a href="../logout.php" class="ul-el" aria-expanded="false">Logout</a></li>
             </ul>
         </div>
     </div>
@@ -50,6 +51,7 @@
         <ul>
             <li><i class="fa-solid fa-flag" style="color: #ffffff;"></i>&nbsp;&nbsp;<a href="./index.php" class="ul-el" aria-expanded="false">History</a></li>
             <li><i class="fa-solid fa-users" style="color: #ffffff;"></i>&nbsp;<a href="./profile.php" class="ul-el" aria-expanded="false"> Profile</a></li>
+            <li><i class="fa-solid fa-arrow-right-from-bracket" style="color: #ffffff;"></i>&nbsp;&nbsp;<a href="../logout.php" class="ul-el" aria-expanded="false">Logout</a></li>
         </ul>
     </div>
     <script>

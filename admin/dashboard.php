@@ -146,18 +146,18 @@ $email = $_SESSION['email'];
             $deptq->execute(array($college_id));
             $depts = $deptq->fetchAll();
             foreach ($depts as $dept) {
-            ?><option value="<?php echo $dept['dept_id']; ?>"><?php echo $dept['dept_name']; ?></option> <?php
+            ?><option value="<?php echo $dept['dept_id']; ?>" <?php if(isset($_POST['dept_id'])){ if($_POST['dept_id']==$dept['dept_id']){ ?> selected <?php} } ?>><?php echo $dept['dept_name']; ?></option> <?php
                                                                                                         } ?>
         </select>
 
         <label for="numbr_inpt" class="lbl_data"><b>Package Less Than:</b></label>
-        <input type="number" name="less_than" min="0" id="numbr_inpt">
+        <input type="number" name="less_than" min="0" id="numbr_inpt" <?php if(isset($_POST['less_than'])){ ?> value="<?php echo $_POST['less_than']; ?>"<?php } ?>>
 
         <label for="numbr_inpt" class="lbl_data"><b>Package Greater Than:</b></label>
-        <input type="number" name="greater_than" min="0" id="numbr_inpt">
+        <input type="number" name="greater_than" min="0" id="numbr_inpt" <?php if(isset($_POST['greater_than'])){ ?> value="<?php echo $_POST['greater_than']; ?>"<?php } ?>>
 
         <label for="numbr_inpt" class="lbl_data"><b>Passout Year:</b></label>
-        <input type="number" name="passout_year" min="2000" id="numbr_inpt">
+        <input type="number" name="passout_year" min="2000" id="numbr_inpt" <?php if(isset($_POST['passout_year'])){ ?> value="<?php echo $_POST['passout_year']; ?>"<?php } ?>>
 
         <input type="submit" id="submit_button">
     </form>
