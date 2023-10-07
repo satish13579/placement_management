@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600&display=swap');
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    font-family: 'Poppins', sans-serif;
+}
+
+
+:root{
+    --bgcolor: #102435;
+}
+
+#placements_table th, #placements_table td{
+    background-color: var(--bgcolor);
+    color: #fff;
+    border: 1px solid #707C86;
+}
+
+#placements_table{
+    margin-block: 20px !important;
+}
+
+.upload_offer_modal{
+    color: #fff;
+    text-decoration: none;
+}

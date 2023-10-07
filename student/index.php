@@ -3,6 +3,7 @@ include 'auth.php';
 
 include 'menu.php';
 ?>
+<link rel="stylesheet" href="index.css">
 <div class="main-container">
     <div style="margin: auto;
 				margin-top:20px;
@@ -10,7 +11,7 @@ include 'menu.php';
         <div class="table-title">
             <div class="row">
                 <div class="col-sm-6">
-                    <h2>Past <b>Placements </b></h2>
+                    <h2><b>Past Placements </b></h2>
                 </div>
             </div>
         </div>
@@ -70,7 +71,7 @@ include 'menu.php';
                                         }
                                     } else {
                                         ?>
-                                        <a href="#addOfferLetter" data-bs-toggle="modal" data-bs-target="#addOfferLetter" class="upload_offer_modal" data-id="<?php echo $row['id']; ?>">Upload Offer Letter <i class="fa-solid fa-upload"></i></a>
+                                        <a href="#addOfferLetter" data-bs-toggle="modal" data-bs-target="#addOfferLetter" class="upload_offer_modal" data-id="<?php echo $row['id']; ?>">Upload Offer Letter <i class="fa-solid fa-upload" style="color: #fff;"></i></a>
                                 <?php
                                     }
                                 } else {
