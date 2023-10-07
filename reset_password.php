@@ -119,6 +119,10 @@ if (count($_GET) > 0) {
         color: #fff;
     }
 
+    .form_container h5{
+        color:#fff;
+    }
+
 </style>
 <div class="user_card">
     <div class="d-flex justify-content-center form_container">
