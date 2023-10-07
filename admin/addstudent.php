@@ -244,10 +244,10 @@ function sendSalt($email, $salt, $roll_no)
     	padding: 10px;" class="table-wrapper">
 			<div class="table-title">
 				<div class="row">
-					<div class="col-sm-6">
-						<h2>Manage <b>Students </b></h2>
+					<div class="col-sm-5">
+						<h2 style="font-size:26px"><b>Manage Students</b></h2>
 					</div>
-					<div class="col-sm-6 text-end">
+					<div class="col-sm-7 text-end">
                         <a href="#addPlacement"class="btn btn-primary"data-bs-toggle="modal"><i class="fa-solid fa-upload"></i> <span>Add Placement</span></a>
 						<a href="#addStudent" id='addStudentbtn' class="btn btn-success" data-bs-toggle="modal"><i class="fa-solid fa-circle-plus"></i> <span>Add New Student</span></a>
 						<a href="JavaScript:void(0);" class="btn btn-danger" id="delete_multiple"><i class="fa-solid fa-circle-minus"></i> <span>Delete</span></a>						
