@@ -1,3 +1,34 @@
+<?php
+include 'conn.php';
+$stat = 1;
+if (count($_GET) > 0) {
+	$salt = $_GET['salt'];
+    $q=$conn->prepare("SELECT * FROM `reset_password` WHERE `salt`=?");
+    $q->execute(array($salt));
+	if ($q->rowCount() >= 1) {
+		$arr = $q->fetch();
+		$flag = $arr['flag'];
+		$date = $arr['date'];
+		$id = $arr['user_id'];
+		if ($flag == 1) {
+			$stat = 2;
+		} else {
+			date_default_timezone_set('Asia/Kolkata');
+			$prev_date = date_create($date);
+			date_add($prev_date, date_interval_create_from_date_string('24 hours'));
+			$cur_date = date_create();
+			if ($cur_date <= $prev_date) {
+				$stat = 4;
+			} else {
+				$stat = 3;
+			}
+		}
+	} else {
+		$stat = 1;
+	}
+}
+?>
+
 <div class="user_card">
     <div class="d-flex justify-content-center form_container">
         <?php
@@ -47,7 +78,7 @@
                 <div class="d-flex justify-content-center mt-3 login_container">
                     <button style="margin-top: 22px;" type="button" name="button" id="resetpassword" class="btn login_btn">Reset Password</button>
                 </div>
-                <input type="hidden" name="type" value="2"></input>
+                <input type="hidden" name="type" value="reset_password"></input>
                 <input type="hidden" name="salt" value="<?php echo $salt; ?>"></input>
             </form>
         <?php
@@ -62,3 +93,210 @@
         </div>
     </div>
 </div>
+
+<script>
+    var rpform = document.getElementById('rpform');
+		if (rpform != null) {
+			var p1 = document.getElementById('p1');
+			var p2 = document.getElementById('p2');
+			p1.addEventListener('keyup', function (event) {
+				if(event.key=='Enter'){
+					p2.focus()
+				}
+				var headbox = document.getElementById('head');
+				var pass = this.value;
+				var upper = false;
+				var upperbox = document.getElementById('upper');
+				var lower = false;
+				var lowerbox = document.getElementById('lower');
+				var digit = false;
+				var digitbox = document.getElementById('number');
+				var special = false
+				var specialbox = document.getElementById('special');
+				var len = false;
+				var lenbox = document.getElementById('len');
+				if (this.value.length >= 8 && this.value.length <= 15) {
+					len = true;
+				}
+				if (hasNumber(pass)) {
+					digit = true;
+				}
+				if (containsSpecialChars(pass)) {
+					special = true;
+				}
+				if (containsLowercase(pass)) {
+					lower = true;
+				}
+				if (containsUppercase(pass)) {
+					upper = true;
+				}
+				var data=document.getElementById('data');
+				if(upper && lower && digit && special && len){
+					data.setAttribute('data-p1',"1");
+				}
+				else{
+					data.setAttribute('data-p1',"0");
+				}
+
+				if (!upper) {
+					upperbox.style.display = "block";
+					upperbox.style.color = "red";
+					var span=document.getElementById('spupper');
+					span.innerHTML="<i class='fa-regular fa-circle-xmark'></i>";
+					
+				}
+				else {
+					upperbox.style.display = "block";
+					upperbox.style.color = "green";
+					var span=document.getElementById('spupper');
+					span.innerHTML="<i class='fa-regular fa-circle-check'></i>";
+				}
+
+				if (!lower) {
+					lowerbox.style.display = "block";
+					lowerbox.style.color = "red";
+					var span=document.getElementById('splower');
+					span.innerHTML="<i class='fa-regular fa-circle-xmark'></i>";
+
+				}
+				else {
+					lowerbox.style.display = "block";
+					lowerbox.style.color = "green";
+					var span=document.getElementById('splower');
+					span.innerHTML="<i class='fa-regular fa-circle-check'></i>";
+				}
+
+				if (!digit) {
+					digitbox.style.display = "block";
+					digitbox.style.color = "red";
+					var span=document.getElementById('spnumber');
+					span.innerHTML="<i class='fa-regular fa-circle-xmark'></i>";
+				}
+				else {
+					digitbox.style.display = "block";
+					digitbox.style.color = "green";
+					var span=document.getElementById('spnumber');
+					span.innerHTML="<i class='fa-regular fa-circle-check'></i>";
+				}
+
+				if (!special) {
+					specialbox.style.display = "block";
+					specialbox.style.color = "red";
+					var span=document.getElementById('spspecial');
+					span.innerHTML="<i class='fa-regular fa-circle-xmark'></i>";
+				}
+				else {
+					specialbox.style.display = "block";
+					specialbox.style.color = "green";
+					var span=document.getElementById('spspecial');
+					span.innerHTML="<i class='fa-regular fa-circle-check'></i>";
+				}
+
+				if (!len) {
+					lenbox.style.display = "block";
+					lenbox.style.color = "red";
+					var span=document.getElementById('splen');
+					span.innerHTML="<i class='fa-regular fa-circle-xmark'></i>";
+				}
+				else {
+					lenbox.style.display = "block";
+					lenbox.style.color = "green";
+					var span=document.getElementById('splen');
+					span.innerHTML="<i class='fa-regular fa-circle-check'></i>";
+				}
+
+
+			});
+			p1.addEventListener('focusin', function (event) {
+				divv = document.getElementsByClassName('req');
+				divv[0].style.display = 'block';
+			});
+			p1.addEventListener('focusout', function (event) {
+				divv = document.getElementsByClassName('req');
+				divv[0].style.display = 'none';
+			});
+			p2.addEventListener('keyup',function(event){
+				if(event.key=='Enter'){
+					$('#resetpassword').click()
+				}
+				var p1=document.getElementById('p1');
+				var pass=p1.value;
+				var confpass=this.value;
+				var divv=document.getElementsByClassName('passmatch');
+				if(pass==confpass){
+					divv[0].style.display="none";
+				}
+				else{
+					divv[0].style.display="block";
+				}
+			});
+			p2.addEventListener('focusin', function (event) {
+				var p1=document.getElementById('p1');
+				var pass=p1.value;
+				var confpass=this.value;
+				var divv=document.getElementsByClassName('passmatch');
+				if(pass==confpass){
+					divv[0].style.display="none";
+				}
+				else{
+					divv[0].style.display="block";
+				}
+			});
+			p2.addEventListener('focusout',function(event){
+				var divv=document.getElementsByClassName('passmatch');
+				divv[0].style.display="none";
+			})
+			var resetpassword = document.getElementById('resetpassword');
+			resetpassword.addEventListener('click',function(event){
+				var data=document.getElementById('data');
+				var p1=data.getAttribute('data-p1');
+				if(p1=='0'){
+					var p1box=document.getElementById('p1');
+					p1box.focus();
+					return;
+				}
+				var p1box=document.getElementById('p1');
+				var p1pass=p1box.value;
+				var p2box=document.getElementById('p2');
+				var p2pass=p2box.value;
+				console.log(p1pass);
+				console.log(p2pass);
+				if(p1pass!=p2pass){
+					var p2box=document.getElementById('p2');
+					p2box.focus();
+					return;
+				}
+				var data = $("#rpform").serialize();
+				$.ajax({
+					data:data,
+					type:"post",
+					url:"login.php",
+					success:function(dataResult){
+						var data=JSON.parse(dataResult);
+						if(data.statusCode==400){
+							alert("Something Went Wrong.!!\n"+data.msg);
+							location.reload();
+						}
+						else if(data.statusCode==200){
+							alert("Password Reset is Successful For "+data.id+".");
+							window.location.href="<?php echo $BASE_URL; ?>login.html";
+						}
+					}
+				});
+			});
+		}
+
+		function containsUppercase(str) {
+			return /[A-Z]/.test(str);
+		}
+		function containsLowercase(str) {
+			return /[a-z]/.test(str);
+		}
+		function hasNumber(myString) {
+			return /\d/.test(myString);
+		}
+		function containsSpecialChars(str) {
+			const specialChars = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+			return specialChars.test(str);
+		}
+</script>
