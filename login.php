@@ -183,6 +183,47 @@ if (count($_POST) > 0) {
     else{
         echo json_encode(array("statusCode"=>400,"msg"=>"Enter a Valid Email Which is linked to a Account.!!"));
     }}
+}else if($_POST['type']=='reset_password'){
+    $errmsg = '';
+    $password = md5($_POST['p2']);
+    $salt = $_POST['salt'];
+    $saltq=$conn->prepare("SELECT * FROM `reset_password` WHERE `salt`=?");
+    $saltq->execute(array($salt));
+    $arr = $saltq->fetch();
+
+    $id = $arr['id'];
+    $role = $arr['role'];
+
+    if($role=='colleges'){
+        $updateq = "UPDATE `college` SET `password`=? WHERE college_id = ?";
+        $updateflagq = "UPDATE `reset_password` SET `flag`='1' WHERE `salt`=?";
+    }else if($role=='departments'){
+        $updateq = "UPDATE `dept` SET `password`=? WHERE dept_id = ?";
+        $updateflagq = "UPDATE `reset_password` SET `flag`='1' WHERE `salt`=?";
+    }
+    else if($role=="students"){
+        $updateq = "UPDATE `students` SET `password`=? WHERE roll_no = ?";
+        $updateflagq = "UPDATE `reset_password` SET `flag`='1' WHERE `salt`=?";
+    }
+    try {
+        $updater = $updateq->execute(array($password,$id));
+    }
+    catch(Exception $e){
+        $errmsg.= "The Following Error Occured While Updating Password For ".$id." :\nError Code : ". $e->getCode()."\nError Message : " . $e->getMessage();
+    }
+    try {
+        $updateflagr = mysqli_query($conn, $updateflagq);
+    }
+    catch(Exception $e){
+        $errmsg.= "The Following Error Occured While Updating Flag For Salt ".$salt." :\nError Code : ". $e->getCode()."\nError Message : " . $e->getMessage();
+    }
+    if($errmsg==''){
+        echo json_encode(array("statusCode" => 200,"id"=>$id));
+    }
+    else{
+        echo json_encode(array("statusCode" => 400, "msg" => $errmsg));
+    }
+
 }
 }
 function reset_template($link, $id, $role)
