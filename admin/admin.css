@@ -95,6 +95,7 @@ body{
 .first h2{
     color: var(--bgcolor);
     font-size: 26px;
+    font-weight: bold;
 }
 
 .choose_file input{
@@ -107,7 +108,9 @@ body{
     rgba(221, 220, 220, 0.5) -3px -3px 6px 1px inset; 
 }
 
-
+.filename{
+    width: 80%;
+}
 
 .choose_file input:hover{
     cursor: pointer;

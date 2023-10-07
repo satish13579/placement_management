@@ -1,7 +1,6 @@
 <?php
 //include 'auth.php';
 include 'auth.php';
-session_start();
 $college_id = $_SESSION['id'];
 $college_name = $_SESSION['name'];
 $email = $_SESSION['email'];
@@ -17,16 +16,131 @@ $email = $_SESSION['email'];
     <link rel="stylesheet" href="admin.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600&display=swap');
 
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        :root{
+            --bgcolor: #102435;
+        }
+
+        form{
+            background-color: var(--bgcolor);
+            border: 2px solid var(--bgcolor);
+            padding: 10px 20px;
+            border-radius: 4px;
+            display: grid;
+            grid-template-columns: auto auto;
+            row-gap: 16px;
+            text-align: center;
+            width: 700px;
+            margin-top: 0px;
+        }
+
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+        }
+
+        #submit_button{
+            grid-column: span 2;
+            width: 40%;
+            margin: auto;
+            box-shadow: none;
+            color: #fff;
+            border: 1px solid #fff;
+            background-color: transparent;
+            border-radius: 4px;
+            padding-block: 5px;
+        }
+
+        #numbr_inpt{
+            border: 1px solid #fff;
+            background-color: transparent;
+            border-radius: 4px;
+            color: #fff;
+            padding-block: 5px;
+        }
+
+        .lbl_data{
+            color: #fff;
+        }
+
+        #slct_optn{
+            border: 1px solid #fff;
+            background-color: var(--bgcolor);
+            border-radius: 4px;
+            color: #fff;
+            padding-block: 5px;
+        }
+
+        .overall_container{
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+            margin: auto;
+            width: 900px;
+            margin-top:30px;
+            filter: drop-shadow(2px 2px 15px rgba(16, 36, 53, .5));
+            margin-bottom: 20px;
+        }
+
+        .overall_container canvas{
+            width: 300px;
+        }
+
+        #placement_table{
+            padding: 10px 5px;
+        }
+
+        #placement_table th, #placement_table td{
+            border: 1px solid rgba(255, 255, 255, .4);
+            background-color: var(--bgcolor);
+            color: #fff;
+        }
+
+        .table-responsive{
+            overflow-x: auto;
+        }
+
+        @media screen and (width <= 500px){
+            form{
+                width: auto;
+                row-gap: 20px;
+                column-gap: 10px;
+            }
+
+            .lbl_data{
+                font-size: 14px;
+            }
+
+            .overall_container{
+                flex-direction: column;
+                width: 300px;
+                padding-left: 15px;
+                gap: 30px;
+            }
+        }   
+    </style>
 </head>
 
 <body>
 
-    <?php //include 'admin.php'; 
+    <?php include 'admin.php'; 
     ?>
-    <form action="" method="post" style="margin-left:240px;">
-        <label>Dept ID</label>
-        <select name="dept_id">
+<div class="main-container">
+    <form action="" method="post" style="margin:auto;">
+        <label for="slct_optn" class="lbl_data"><b>Dept ID:</b></label>
+        <select name="dept_id" id="slct_optn">
+            <option value="">Select Department</option>
             <?php
             $deptq = $conn->prepare("SELECT * FROM dept WHERE college_id=?");
             $deptq->execute(array($college_id));
@@ -36,26 +150,29 @@ $email = $_SESSION['email'];
                                                                                                         } ?>
         </select>
 
-        <label>Package Less Than</label>
-        <input type="number" name="less_than" min="0">
+        <label for="numbr_inpt" class="lbl_data"><b>Package Less Than:</b></label>
+        <input type="number" name="less_than" min="0" id="numbr_inpt">
 
-        <label>Package Greater Than</label>
-        <input type="number" name="greater_than" min="0">
+        <label for="numbr_inpt" class="lbl_data"><b>Package Greater Than:</b></label>
+        <input type="number" name="greater_than" min="0" id="numbr_inpt">
 
-        <label>Passout Year</label>
-        <input type="number" name="passout_year" min="2000">
+        <label for="numbr_inpt" class="lbl_data"><b>Passout Year:</b></label>
+        <input type="number" name="passout_year" min="2000" id="numbr_inpt">
 
-        <input type="submit">
+        <input type="submit" id="submit_button">
     </form>
-                      <div style="width:300px;">                                                                                  
-    <canvas id="myPieChart" width="400" height="400"></canvas>
+
+            <div class="overall_container">
+                <div>                                                                                  
+                    <canvas id="myPieChart" width="200" height="400"></canvas>
                 </div>
-                <div style="width:300px;">                                                                                  
-                <canvas id="jobTitlesChart" width="400" height="400"></canvas>
+                <div>                                                                                  
+                    <canvas id="jobTitlesChart" width="200" height="400"></canvas>
                 </div>
-                <div style="width:300px;">                                                                                  
-                <canvas id="CompanyChart" width="400" height="400"></canvas>
+                <div>                                                                                  
+                    <canvas id="CompanyChart" width="200" height="400"></canvas>
                 </div>
+            </div>                                                                                            
 
 
     <?php
@@ -67,7 +184,7 @@ $email = $_SESSION['email'];
         } else if ($_POST['dept_id'] != '' && $_POST['passout_year'] == '') {
             $studentq = "SELECT roll_no FROM students WHERE dept_id=" . $_POST['dept_id'];
         } else {
-            $studentq = "SELECT roll_no FROM students WHERE dept_id in (SELECT dept_id in dept WHERE college_id=" . $_SESSION['id'] . ")";
+            $studentq = "SELECT roll_no FROM students WHERE dept_id in (SELECT dept_id from dept WHERE college_id=" . $_SESSION['id'] . ")";
         }
 
         $mainq = "SELECT * FROM placements WHERE roll_no in (" . $studentq . ") ";
@@ -78,7 +195,6 @@ $email = $_SESSION['email'];
         }else if($_POST['less_than'] > 0 && $_POST['greater_than']>0){
             $mainq .= "AND ( package<=" . $_POST['less_than']." OR package>=".$_POST['greater_than']." )";
         }
-
         $q = $conn->prepare($mainq);
         $q->execute();
         $res = $q->fetchAll();
@@ -108,7 +224,7 @@ $email = $_SESSION['email'];
         ?>
         
 
-        <div classs="table-responsive">
+        <div class="table-responsive">
             <table id="placement_table" class="table table-striped table-hover">
                 <thead><th>S.NO</th><th>Roll No</th><th>Job Title</th><th>Company</th><th>Package</th><th>Job Status</th><th>Is Accepted</th></thead>
                 <tbody>
@@ -124,7 +240,7 @@ $email = $_SESSION['email'];
                             <td><?php if($row['job_status']==1){
                                 echo "<i class='fa-solid fa-circle-check'></i> <span class='placed'>Placed</span>"; }else{ echo "<i class='fa-solid fa-circle-xmark'></i> <span class='rejected'>Rejected</span>"; }?></td>
                         </tr>
-<?php
+                        <?php
                     } ?>
                 </tbody>
             </table>
@@ -258,3 +374,4 @@ $email = $_SESSION['email'];
     }
 
     ?>
+</div>
