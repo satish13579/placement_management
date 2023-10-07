@@ -93,7 +93,7 @@ if (count($_POST) > 0) {
             } else if ($row['password'] == md5($password)) {
                 session_start();
                 $_SESSION['id'] = $row['roll_no'];
-                $_SESSION['name'] = $row['name'];
+                $_SESSION['name'] = $row['first_name'];
                 $_SESSION['email'] = $row['email'];
                 $_SESSION['role'] = 'student';
                 echo json_encode(array("statusCode" => 200, "role" => "student"));
