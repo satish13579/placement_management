@@ -146,7 +146,7 @@ $email = $_SESSION['email'];
             $deptq->execute(array($college_id));
             $depts = $deptq->fetchAll();
             foreach ($depts as $dept) {
-            ?><option value="<?php echo $dept['dept_id']; ?>" <?php if(isset($_POST['dept_id'])){ if($_POST['dept_id']==$dept['dept_id']){ ?> selected <?php} } ?>><?php echo $dept['dept_name']; ?></option> <?php
+            ?><option value="<?php echo $dept['dept_id']; ?>" <?php if(isset($_POST['dept_id'])){ if($_POST['dept_id']==$dept['dept_id']){ ?> selected <?php }} ?>><?php echo $dept['dept_name']; ?></option> <?php
                                                                                                         } ?>
         </select>
 
