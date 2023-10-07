@@ -28,7 +28,102 @@ if (count($_GET) > 0) {
 	}
 }
 ?>
+<script src="https://kit.fontawesome.com/a4e89c7158.js" crossorigin="anonymous"></script>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600&display=swap');
 
+    *{
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        scroll-behavior: smooth;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    body{
+        min-height: 100vh; 
+        background-color: rgb(20, 20, 39);
+        display: flex; 
+        justify-content: center; 
+        align-items: center;
+    }
+
+    .user_card{
+        border: 1px solid #fff;
+        border-radius: 6px;
+        padding: 20px;
+    }
+
+    .input-group{
+        background-color: #fff;
+        border: 2px solid #000;
+        border-radius: 4px;
+        padding: 5px 10px;
+        box-shadow: rgb(219, 219, 219) 3px 3px 6px 0px inset, 
+        rgba(221, 220, 220, 0.5) -3px -3px 6px 1px inset;
+        margin: auto;
+        margin-bottom: 20px;
+    }
+
+    input:focus{
+        outline: none;
+    }
+
+    input{
+        border: none;
+        padding-left: 5px;
+    }
+
+    .req{
+        padding: 10px;
+    }
+
+    .req p{
+        font-size: 12px;
+        color:#fff;
+        margin-bottom: 4px;
+    }
+
+    #resetpassword{
+        background-color: transparent;
+        color: #fff;
+        padding: 5px 20px;
+        border: 2px solid #fff;
+        transition: all .2s;
+        border-radius: 4px;
+        font-weight: bold;
+        width: 90%;
+        text-align: center;
+    }
+
+    #resetpassword:hover{
+        background-color: #fff;
+        color: rgb(20, 20, 39);
+        cursor: pointer;
+    }
+
+    #resetpassword:active{
+        transform: scale(.95);
+    }
+
+    .login_container{
+        text-align: center;
+    }
+
+    .links{
+        text-align: center;
+        padding: 20px;
+    }
+
+    .links a{
+        color: #fff;
+    }
+
+    .form_container h5{
+        color:#fff;
+    }
+
+</style>
 <div class="user_card">
     <div class="d-flex justify-content-center form_container">
         <?php
@@ -50,25 +145,21 @@ if (count($_GET) > 0) {
         ?>
             <form id="rpform">
                 <div class="input-group mb-3">
-
-                    <span class="input-group-text"><i class="fas fa-key"></i></span>
-
+                    <label for=""><i class="fa fa-solid fa-lock" style="color: rgb(20, 20, 39)"></i></label>
                     <input id="p1" type="password" name="p1" class="form-control input_user" value="" placeholder="Enter a New Password" required>
                 </div>
                 <div class="input-group mb-2">
 
-                    <span class="input-group-text"><i class="fas fa-key"></i></span>
-
+                    <label for=""><i class="fa fa-solid fa-lock" style="color: rgb(20, 20, 39)"></i></label>        
                     <input id="p2" type="text" name="p2" class="form-control input_pass" value="" placeholder="Retype Your Password" required>
-
                 </div>
                 <div style="display:none;" class="req">
-                    <p id='head'>Password Must FulFill Below Requirements :</p>
-                    <p id='len'>Length 8 - 15 Characters <span id='splen'></span></p>
-                    <p id='lower'>1 lowercase Character <span id='splower'></span></p>
-                    <p id='upper'>1 UpperCase Character <span id='spupper'></span></p>
-                    <p id='number'>1 Number <span id='spnumber'></span></p>
-                    <p id='special'>1 special Character <span id='spspecial'></span></p>
+                    <p id='head'><b>Password Must FulFill Below Requirements :</b></p>
+                    <p id='len'>* Length 8 - 15 Characters <span id='splen'></span></p>
+                    <p id='lower'>* 1 lowercase Character <span id='splower'></span></p>
+                    <p id='upper'>* 1 UpperCase Character <span id='spupper'></span></p>
+                    <p id='number'>* 1 Number <span id='spnumber'></span></p>
+                    <p id='special'>* 1 special Character <span id='spspecial'></span></p>
                 </div>
                 <div style="display:none;" class="passmatch">
                     <p style="color:red;" id="pmatch">Both Passwords Should Match</p>
@@ -81,6 +172,9 @@ if (count($_GET) > 0) {
                 <input type="hidden" name="type" value="reset_password"></input>
                 <input type="hidden" name="salt" value="<?php echo $salt; ?>"></input>
             </form>
+            <script>
+                let Eye = document.getElementById('')
+            </script>
         <?php
         }
 
@@ -89,7 +183,7 @@ if (count($_GET) > 0) {
 
     <div class="mt-4">
         <div class="d-flex justify-content-center links">
-            <a href="http://localhost/mid-automation/log_in.php">Go to Log In</a>
+            <a href="http://localhost/placement_management/login.html">Go to Login</a>
         </div>
     </div>
 </div>

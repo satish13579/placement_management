@@ -35,7 +35,7 @@ body{
     color: #fff;
     padding: 10px 40px;
     text-align: center;
-    font-size: 26px;
+    font-size: 18px;
 }
 
 .hr{
@@ -55,8 +55,8 @@ body{
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 40px;
-    margin-top: 20px;
+    gap: 30px;
+    margin-top: 40px;
     padding-left: 8px !important;
 }
 

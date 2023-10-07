@@ -20,7 +20,7 @@
 <body>
     <div class="dashboard_container">
         <div class="main">
-            <h2 class="admin-heading"><?php echo $_SESSION['id']; ?> &nbsp;<i class="fa fa-solid fa-user fa-sm" style="color:#fff"></i></h2>
+            <h2 class="admin-heading"><i class="fa-solid fa-user-graduate" style="color:#fff;"></i>&nbsp;<?php echo $_SESSION['id']; ?></h2>
             <div class="hr"></div>
             <ul>
                 <li><i class="fa-solid fa-flag" style="color: #ffffff;"></i>&nbsp;<a href="./index.php" class="ul-el" aria-expanded="false">History</a></li>
