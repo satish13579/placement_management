@@ -69,7 +69,7 @@ if (count($_POST) > 0) {
         VALUES (?,?,?,?,?)");
                 $insq->execute(array('students', $roll_no, $salt, 0, $cur));
                 echo json_encode(array("statusCode" => 200));
-            } catch (Exception $e) {
+            } catch (PDOException $e) {
                 $msg = "Error code: " . $e->getCode() . "\nError Message: " . $e->getMessage();
                 echo json_encode(array("statusCode" => 400, "err" => $msg));
             }
@@ -100,7 +100,7 @@ if (count($_POST) > 0) {
                         $insq = $conn->prepare("INSERT INTO `reset_password`(`role`, `user_id`, `salt`, `flag`, `date`)
                          VALUES (?,?,?,?,?)");
                         $insq->execute(array('students', $roll_no, $salt, 0, $cur));
-                    } catch (Exception $e) {
+                    } catch (PDOException $e) {
                         $errmsg = "Error code: " . $e->getCode() . "\nError Message: " . $e->getMessage();
                     }
                     if ($errmsg == '') {
@@ -130,7 +130,7 @@ if (count($_POST) > 0) {
                 $insert = $conn->prepare("UPDATE `students` SET `first_name`=?,`last_name`=?,`dob`=?,`email`=?,`dept_id`=?,`passout_year`=? WHERE roll_no=?");
                 $res = $insert->execute(array($first_name, $last_name, $dob, $email, $dept_id, $passout_year, $roll_no));
                 echo json_encode(array("statusCode" => 200));
-            } catch (Exception $e) {
+            } catch (PDOException $e) {
                 $msg = "Error code: " . $e->getCode() . "\nError Message: " . $e->getMessage();
                 echo json_encode(array("statusCode" => 400, "err" => $msg));
             }
@@ -146,7 +146,7 @@ if (count($_POST) > 0) {
                 $insert = $conn->prepare("DELETE FROM `students` WHERE roll_no=?");
                 $res = $insert->execute(array($roll_no));
                 echo json_encode(array("statusCode" => 200));
-            } catch (Exception $e) {
+            } catch (PDOException $e) {
                 $msg = "Error code: " . $e->getCode() . "\nError Message: " . $e->getMessage();
                 echo json_encode(array("statusCode" => 400, "err" => $msg));
             }
@@ -161,7 +161,7 @@ if (count($_POST) > 0) {
             try {
                 $sql = $conn->prepare("DELETE FROM `students` WHERE roll_no=?");
                 $res = $sql->execute(array($id));
-            } catch (Exception $e) {
+            } catch (PDOException $e) {
                 $err .= "Error For $id\nError code: " . $e->getCode() . "\nError Message: " . $e->getMessage();
             }
         }
