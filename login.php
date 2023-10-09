@@ -191,7 +191,7 @@ if (count($_POST) > 0) {
     $saltq->execute(array($salt));
     $arr = $saltq->fetch();
 
-    $id = $arr['id'];
+    $id = $arr['user_id'];
     $role = $arr['role'];
 
     if($role=='colleges'){
@@ -206,13 +206,15 @@ if (count($_POST) > 0) {
         $updateflagq = "UPDATE `reset_password` SET `flag`='1' WHERE `salt`=?";
     }
     try {
+        $updateq = $conn->prepare($updateq);
         $updater = $updateq->execute(array($password,$id));
     }
     catch(Exception $e){
         $errmsg.= "The Following Error Occured While Updating Password For ".$id." :\nError Code : ". $e->getCode()."\nError Message : " . $e->getMessage();
     }
     try {
-        $updateflagr = mysqli_query($conn, $updateflagq);
+        $updateflagq = $conn->prepare($updateflagq);
+        $updateflagq->execute(array($salt));
     }
     catch(Exception $e){
         $errmsg.= "The Following Error Occured While Updating Flag For Salt ".$salt." :\nError Code : ". $e->getCode()."\nError Message : " . $e->getMessage();
