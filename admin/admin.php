@@ -37,7 +37,7 @@
                 <div class="admin_heading">
                     <h2 class="admin-heading">ADMIN &nbsp;<i class="fa fa-solid fa-user fa-sm" style="color:#fff"></i></h2>
                 </div>
-                <div class="items"id="items">
+                <div class="items" id="items">
                     <button id="side_item">
                         <i class="fa-solid fa-bars fa-lg" style="color: #ffffff;" id="hamburger_menu"></i>
                     </button>
